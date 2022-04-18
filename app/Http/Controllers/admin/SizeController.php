@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Size;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SizeController extends Controller
 {
@@ -14,7 +17,11 @@ class SizeController extends Controller
      */
     public function index()
     {
-        return view('pages-admin.settings.sizes.index');
+        $data = Size::all();
+        return view('pages-admin.settings.sizes.index')
+        ->with([
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -35,7 +42,18 @@ class SizeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'size' => 'required',
+            'price' => 'required',
+        ]);
+
+        $data = new Size;
+
+        $data->size   = $request->size;
+        $data->price  = $request->price;
+
+        $data->save();
+        return back();
     }
 
     /**
@@ -56,8 +74,12 @@ class SizeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $data = Size::find($id);
+        return view('pages-admin.settings.sizes.edit')
+            ->with([
+                'data' => $data,
+            ]);
     }
 
     /**
@@ -68,8 +90,20 @@ class SizeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
+
     {
-        //
+        $request->validate([
+            'size' => 'required',
+            'price' => 'required',
+        ]);
+
+        $data = Size::find($id);
+ 
+        $data->size   = $request->size;
+        $data->price  = $request->price;
+
+        $data->save();
+        return back();
     }
 
     /**
@@ -80,6 +114,12 @@ class SizeController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        try {
+            DB::table('sizes')->delete($id);
+            return back();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

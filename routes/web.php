@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('app');
+    return view('welcome');
 });
 
 //products controller
@@ -36,7 +36,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('category', 'CategoryController');
 });
 
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+Route::namespace('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('size', 'SizeController');
 });
 

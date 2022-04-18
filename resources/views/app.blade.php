@@ -40,34 +40,23 @@
                 <div class="collapse navbar-collapse" id="navbarContent">
     
                     <ul class="navbar-nav me-auto">
+                        @guest
+                            <li class="nav-item"> 
+                                <a class="nav-link" href="{{ url('/') }}">Home</a>
+                            </li>
+                        @else
+                            <li class="nav-item"> 
+                                <a class="nav-link" href="{{ url('/') }}">Home</a>
+                            </li>
+                        
+                            <li class="nav-item"> 
+                                <a class="nav-link" href="{{ route('products.index') }}">Products</a>
+                            </li>
 
-                        <li class="nav-item"> 
-                            <a class="nav-link" href="{{ url('/') }}">Home</a>
-                        </li>
-
-                        <li class="nav-item"> 
-                            <a class="nav-link" href="{{ route('products.index') }}">Products</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('order.index') }}" class="nav-link">Orders</a>
-                        </li>
-                    </ul>
-
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('notifications.index')}}">
-                                <i class="fa-solid fa-bell"></i>
-                                <span class="badge bg-danger">3</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cart.index')}}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="badge bg-danger">3</span>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('order.index') }}" class="nav-link">Orders</a>
+                            </li>
+                        @endguest
                     </ul>
     
                     <!-- Right Side Of Navbar -->
@@ -85,8 +74,22 @@
                             @endif
                         @else
     
-                           
-    
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('notifications.index')}}">
+                                        <i class="fa-solid fa-bell"></i>
+                                        <span class="badge bg-danger">3</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('cart.index')}}">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                        <span class="badge bg-danger">3</span>
+                                    </a>
+                                </li>
+                            </ul>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -109,8 +112,6 @@
                 </div>
             </div> 
         </nav>
-
-        @include('layouts.hero')
 
         <main class="container mb-5">
             @yield('content')

@@ -45,6 +45,38 @@
                         </thead>
                 
                         <tbody id="tableBody">
+                            @foreach ($data as $size)
+                                <tr>
+                                    <td>{{ $size->id }}</td>
+                                    <td>{{ $size->size }}</td>
+                                    <td>{{ $size->price }}</td>
+                                    <td>
+                                        {{-- <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#editSize"> --}}
+                                        {{-- <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#editSize">
+                                            Edit
+                                        </button> --}}
+                                        <div class="d-flex justify-content-center">
+                                            <a role="button" href="{{ route('admin.size.edit', $size->id) }}" class="btn btn-primary btn-sm me-2 ">Edit</a>
+                                            <form action="{{ route('admin.size.destroy', $size->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </div>
+
+                                        
+                                        {{-- <a href="{{ route('admin.size.destroy', $size->id) }}" class="btn btn-danger"></a> --}}
+
+
+                                        {{-- @include('pages-admin.settings.sizes.edit') --}}
+
+                                        {{-- <button class="btn btn-danger">
+                                            Delete
+                                        </button> --}}
+                                    </td>
+                                </tr> 
+                            @endforeach
                         </tbody>    
                     </table>
                 </div>   

@@ -3,22 +3,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createSizesLabel">Create Size/h5>
+                <h5 class="modal-title" id="createSizesLabel">Create Size</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form id="form" method="post">
-
+            <form action="{{ route('admin.size.store', 'store') }}" method="POST">
+                @csrf
                 <div class="modal-body">
                     <div class="container ">
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="name" placeholder=" ">
+                            <input type="text" class="form-control" id="name" name="size" placeholder=" ">
                             <label for="name">Size</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="price" placeholder=" ">
+                            <input type="text" class="form-control" id="price" name="price"  placeholder=" ">
                             <label for="price">Price</label>
                         </div>
 
