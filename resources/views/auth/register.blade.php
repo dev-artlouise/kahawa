@@ -18,10 +18,10 @@
                             @csrf
     
                             <div class="form-floating mt-4 mb-3">
-                                <input type="text" class="form-control  @error('first_name') is-invalid @enderror" name="first_name" placeholder=" " value="{{old('first_name')}}">
+                                <input type="text" class="form-control  @error('firstName') is-invalid @enderror" name="firstName" placeholder=" " value="{{old('firstName')}}">
                                 <label for="name">First Name</label>
     
-                                    @error('first_name')
+                                    @error('firstName')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -29,10 +29,10 @@
                             </div>
 
                             <div class="form-floating mt-4 mb-3">
-                                <input type="text" class="form-control  @error('last_name') is-invalid @enderror" name="last_name" placeholder=" " value="{{old('last_name')}}">
+                                <input type="text" class="form-control  @error('lastName') is-invalid @enderror" name="lastName" placeholder=" " value="{{old('lastName')}}">
                                 <label for="name">Last Name</label>
     
-                                    @error('last_name')
+                                    @error('lastName')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -40,8 +40,8 @@
                             </div>
 
                             <div class="form-floating mt-4 mb-3">
-                                <input type="text" class="form-control" name="middle_name" placeholder=" " value="{{old('middle_name')}}">
-                                <label for="name">Middle Name</label>
+                                <input type="text" class="form-control" name="middleName" placeholder=" " value="{{old('middleName')}}">
+                                <label for="middleName">Middle Name</label>
                             </div>
 
                             <div class="form-floating mt-4 mb-3">
@@ -67,10 +67,10 @@
                             </div>
 
                             <div class="form-floating mt-4 mb-3">
-                                <input type="text" class="form-control  @error('contact_number') is-invalid @enderror" name="contact_number" placeholder=" " value="{{old('contact_number')}}">
+                                <input type="text" class="form-control  @error('contactNumber') is-invalid @enderror" name="contactNumber" placeholder=" " value="{{old('contactNumber')}}">
                                 <label for="name">Contact Number</label>
     
-                                    @error('contact_number')
+                                    @error('contactNumber')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
