@@ -39,11 +39,30 @@
                             <tr>
                                 <th scope="col">Category #</th>
                                 <th scope="col">Category</th>
+                                <th scope="col">Description</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                 
                         <tbody id="tableBody">
+                            @foreach ($data as $category)
+                                <tr>
+                                    <td>{{ $category->id }}</td>
+                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $category->description }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <a role="button" href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-primary btn-sm me-2 ">Edit</a>
+                                            <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>   
+                            @endforeach
                         </tbody>    
                     </table>
                 </div>   

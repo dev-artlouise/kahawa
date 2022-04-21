@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="{{route('admin.products.store', 'store')}}"enctype="multipart/form-data" id="form" method="post">
+            <form action="{{route('admin.products.store', 'store')}}"enctype="multipart/form-data" method="POST">
                 @csrf
 
                 <div class="modal-body">
@@ -28,7 +28,7 @@
                             <input type="file" class="form-control" name="productImage" id="productImage">
                         </div>
 
-                        <div class="form-floating">
+                        {{-- <div class="form-floating mb-3">
                             <select class="form-select" id="category" name="category">
                               <option selected>Select a Category</option>
                               <option value="Beverages">Beverages</option>
@@ -37,13 +37,22 @@
                             <label for="category">Works with selects</label>
                         </div>
 
+                        <div class="form-floating">
+                            <select class="form-select" id="category" name="size">
+                              <option selected>Select a Size</option>
+                              <option value="12">12</option>
+                              <option value="16">16</option>
+                            </select>
+                            <label for="category">Works with selects</label>
+                        </div> --}}
+
                     </div>
                 
                 </div>  
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </form>
 

@@ -7,18 +7,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form id="form" method="post">
-
+            <form action="{{ route('admin.category.store', 'store') }}" method="POST">
+                @csrf
                 <div class="modal-body">
                     <div class="container ">
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="name" placeholder=" ">
+                            <input type="text" class="form-control" id="name" placeholder=" " name="name">
                             <label for="name">Category Name</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" id="description" placeholder=" "></textarea>
+                            <textarea class="form-control" id="description" placeholder=" " name="description"></textarea>
                             <label for="description">Description</label>
                         </div>
 

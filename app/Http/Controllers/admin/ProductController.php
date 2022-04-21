@@ -17,7 +17,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('pages-admin.settings.products.index');
+        $data = Product::all();
+
+        return view('pages-admin.settings.products.index')
+        ->with([
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -41,43 +46,19 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'category' => 'required',
+            // 'category' => 'required',
             'productImage' => 'nullable',
         ]);
 
-        try {
-            $data = new Product;
+        $data = new Product;
 
-            $data->name         = $request->name;
-            $data->description  = $request->description;
-            $data->category     = $request->category;
-            $data->productImage = $request->productImage;
+        $data->name = $request->name;
+        $data->description = $request->desctiption;
+
+        $data->save();
+        return back();
+
         
-            $data->created_at               = now();
-            $data->updated_at               = now();
-            
-            // if ($request->hasfile('productImage')) {
-            //     $file = $request->file('productImage');
-            //     $extension = $file->getClientOriginalExtension();
-            //     $filename = time() . '.' . $extension;
-            //     $file->move('uploads/', $filename);
-            //     $data->productImage = $filename;
-            // } else {
-            //     return $request;
-            //     $data->barangayPicture1 = '';
-            // }
-        
-            $data->category_id  = $request->category_id;
-            $data->size_id      = $request->size_id;
-
-            $data->save();
-            // return redirect()->route('request.show', $data->user_id);
-        } catch (\Throwable $th) {
-
-            // session()->flash('danger', 'Please fill out all fields with (*) symbol');
-            // return back();
-            // throw $th;   
-        }
     }
 
     /**

@@ -76,6 +76,7 @@ class SizeController extends Controller
     public function edit($id)
     {   
         $data = Size::find($id);
+
         return view('pages-admin.settings.sizes.edit')
             ->with([
                 'data' => $data,
@@ -114,7 +115,6 @@ class SizeController extends Controller
      */
     public function destroy($id)
     {
-
         try {
             DB::table('sizes')->delete($id);
             return back();

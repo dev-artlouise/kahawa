@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Category;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -14,7 +17,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('pages-admin.settings.categories.index');
+        $data = Category::all();
+
+        return view('pages-admin.settings.categories.index')
+        ->with([
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -35,7 +43,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $data = new Category;
+
+        $data->name   = $request->name;
+        $data->description  = $request->description;
+
+        $data->save();
+        return back();
     }
 
     /**
@@ -56,8 +75,13 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $data = Category::find($id);
+        
+        return view('pages-admin.settings.categories.edit')
+            ->with([
+                'data' => $data,
+            ]);
     }
 
     /**
@@ -69,7 +93,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $data = Category::find($id);
+ 
+        $data->name   = $request->name;
+        $data->description  = $request->description;
+
+        $data->save();
+        return back();
     }
 
     /**
@@ -80,6 +115,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::table('categories')->delete($id);
+            return back();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }
