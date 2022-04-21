@@ -45,19 +45,34 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
-            // 'category' => 'required',
+            'description' => 'nullable',
             'productImage' => 'nullable',
+
+            // 'category' => 'required',
+            // 'size' => 'required',
         ]);
 
         $data = new Product;
 
         $data->name = $request->name;
-        $data->description = $request->desctiption;
+        $data->description = $request->description;
+
+        if ($request->hasfile('productImage')) {
+            $file = $request->file('productImage');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/', $filename);
+            $data->productImage = $filename;
+        } else {
+            return $request;
+            $data->productImage = '';
+        }
+
+        // $data->category_id = $request->category_id;
+        // $data->size_id = $request->size_id;
 
         $data->save();
         return back();
-
         
     }
 

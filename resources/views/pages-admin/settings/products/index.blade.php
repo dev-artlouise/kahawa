@@ -41,22 +41,38 @@
                         <thead class="">
                             <tr>
                                 <th scope="col">Product #</th>
-                                <th scope="col">Porduct Name</th>
+                                <th scope="col">Product Image</th>
+                                <th scope="col">Product Name</th>
                                 <th scope="col">Category</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Price</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                 
                         <tbody id="">
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button>Edit</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
+                            @foreach ($data as $product)
+                                <tr>
+                                    <td>{{ $product->id }}</td>
+                                    <td> <img src="{{ asset('uploads/'. $product->productImage )}}" alt="product image" height="40" width="40"> </td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>Beverages</td>
+                                    <td>16oz</td>
+                                    <td>69</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <a role="button" href="#" class="btn btn-primary btn-sm me-2 ">Edit</a>
+                                            <form action="#" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            
                         </tbody>    
                     </table>
                 </div>   

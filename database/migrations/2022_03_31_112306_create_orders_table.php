@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->string('description');
             $table->string('orderType');
             $table->timestamps();
+            
             $table->integer('user_id');
             $table->integer('payment_id');
            
