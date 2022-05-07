@@ -5,12 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
-{
+{   
+    protected $table = 'products';
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'name',
         'description',
-        'productImage',
-        // 'category_id',
-        // 'size_id'
+        'image',
+        'category_id',
     ];
+
+    protected $timestamp = TRUE;
 }

@@ -41,7 +41,7 @@
                                     </div>
                     
                                     <div class="form-floating mb-3">
-                                        <textarea type="text" class="form-control" id="description" name="description"  placeholder=" " value="{{ $data->description }}"></textarea>
+                                        <textarea type="text" class="form-control" id="description" name="description"  placeholder=" "> {{ $data->description }} </textarea>
                                         <label for="description">Descrption</label>
                                     </div>
                     

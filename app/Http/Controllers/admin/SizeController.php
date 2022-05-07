@@ -104,7 +104,8 @@ class SizeController extends Controller
         $data->price  = $request->price;
 
         $data->save();
-        return back();
+        // return back();
+        return redirect('admin/size');
     }
 
     /**

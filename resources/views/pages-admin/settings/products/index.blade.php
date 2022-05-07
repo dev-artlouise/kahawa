@@ -40,28 +40,25 @@
                         <caption>List of Products</caption>
                         <thead class="">
                             <tr>
-                                <th scope="col">Product #</th>
-                                <th scope="col">Product Image</th>
+                                <th scope="col">#</th>
+                                <td scope="col">Image</td>
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Category</th>
-                                <th scope="col">Size</th>
-                                <th scope="col">Price</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                 
                         <tbody id="">
-                            @foreach ($data as $product)
+                            @foreach ($data as $key => $product)
                                 <tr>
-                                    <td>{{ $product->id }}</td>
-                                    <td> <img src="{{ asset('uploads/'. $product->productImage )}}" alt="product image" height="40" width="40"> </td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>Beverages</td>
-                                    <td>16oz</td>
-                                    <td>69</td>
+                                    <td> {{ ++$key }} </td>
+                                    <td> <img src="{{ asset('uploads/'. $product->image )}}" alt="product image" height="50" width="50"> </td>
+                                    <td> {{ $product->product_name }}</td>
+                                    <td> {{ $product->category_name }}</td>
                                     <td>
                                         <div class="d-flex justify-content-center">
                                             <a role="button" href="#" class="btn btn-primary btn-sm me-2 ">Edit</a>
+
                                             <form action="#" method="POST">
                                                 @csrf
                                                 @method('DELETE')

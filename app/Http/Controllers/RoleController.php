@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-
-class ProductController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +13,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $data       = DB::select('SELECT products.id AS product_id, products.name AS product_name, products.description AS product_description, products.image, products.category_id,
-                                category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
-                                INNER JOIN categories AS category ON products.category_id =  category.id');
-
-        return view('pages-user.products.index')
-                ->with([
-                    'data'      => $data,
-                ]);
+    {
+        //
     }
 
     /**
@@ -49,21 +41,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        return view('pages-user.products.show');
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
         //
     }
@@ -72,10 +64,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
         //
     }
@@ -83,10 +75,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
         //
     }

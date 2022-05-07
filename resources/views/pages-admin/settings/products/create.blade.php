@@ -13,6 +13,12 @@
                 <div class="modal-body">
                     <div class="container ">
 
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="category_id" id="category_id">
+                            @foreach ($category as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                          </select>
+
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="name" name="name" placeholder=" ">
                             <label for="name">Product Name</label>
@@ -25,7 +31,7 @@
 
                         <div class="form-group mb-3 ">
                             <label for="">Upload Product Image</label>
-                            <input type="file" class="form-control" name="productImage" id="productImage">
+                            <input type="file" class="form-control" name="image" id="image">
                         </div>
 
                         {{-- <div class="form-floating mb-3">

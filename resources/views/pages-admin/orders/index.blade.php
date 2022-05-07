@@ -11,7 +11,7 @@
                             <li class="breadcrumb-item"><a href="#">Admin</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Orders</li>
                         </ol>
-                    </nav>      
+                    </nav>
                 </div>
             </div>
         </div>
@@ -19,13 +19,27 @@
         <div class="card">
             <div class="card-header ">
     
-                <h4 class="text-secondary float-start"><strong>ORDERS</strong></h4> 
-                         
-                <!-- Button trigger modal -->
-                {{-- <button type="button" class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#createProduct">
-                    Create
-                </button> --}}
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                      <a class="navbar-brand text-secondary" href="#"> <strong> ORDERS </strong> </a>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
 
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+
+                        <form class="d-flex">
+                          <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
+                                New Order
+                            </button>
+
+                            @include('pages-admin.orders.create')
+                        </form>
+                      </div>
+                    </div>
+                  </nav>
             </div>
     
             <div class="card-body">

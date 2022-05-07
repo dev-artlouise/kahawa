@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\admin;
 
 use App\Product;
+use App\Category;
+
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+
 
 
 class ProductController extends Controller
@@ -17,11 +21,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::all();
+        $data       = DB::select('SELECT products.id AS product_id, products.name AS product_name, products.description AS product_description, products.image, products.category_id,
+                                category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
+                                INNER JOIN categories AS category ON products.category_id =  category.id');
+        $category   = Category::all();
 
         return view('pages-admin.settings.products.index')
         ->with([
-            'data' => $data,
+            'data'      => $data,
+            'category'  => $category,
         ]);
     }
 
@@ -46,7 +54,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'productImage' => 'nullable',
+            'image' => 'nullable',
 
             // 'category' => 'required',
             // 'size' => 'required',
@@ -54,18 +62,19 @@ class ProductController extends Controller
 
         $data = new Product;
 
-        $data->name = $request->name;
-        $data->description = $request->description;
+        $data->category_id  = $request->category_id;
+        $data->name         = $request->name;
+        $data->description  = $request->description;
 
-        if ($request->hasfile('productImage')) {
-            $file = $request->file('productImage');
+        if ($request->hasfile('image')) {
+            $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $file->move('uploads/', $filename);
-            $data->productImage = $filename;
+            $data->image = $filename;
         } else {
             return $request;
-            $data->productImage = '';
+            $data->image = '';
         }
 
         // $data->category_id = $request->category_id;
@@ -73,7 +82,7 @@ class ProductController extends Controller
 
         $data->save();
         return back();
-        
+
     }
 
     /**
@@ -107,7 +116,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return redirect('admin/product');
     }
 
     /**

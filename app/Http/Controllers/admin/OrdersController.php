@@ -4,6 +4,10 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Products;
+use App\Size;
 
 class OrdersController extends Controller
 {
@@ -14,7 +18,17 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        return view('pages-admin.orders.index');
+        $products   = DB::select('SELECT products.id AS product_id, products.name AS product_name, products.description AS product_description, products.image, products.category_id,
+                                category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
+                                INNER JOIN categories AS category ON products.category_id =  category.id');
+
+        $sizes      = Size::all();
+
+        return view('pages-admin.orders.index')
+                ->with([
+                    'products'  => $products,
+                    'sizes'     => $sizes,
+                ]);
     }
 
     /**

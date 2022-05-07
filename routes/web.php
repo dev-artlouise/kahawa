@@ -17,33 +17,42 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//products controller
-Route::resource('products', 'ProductController');
-Route::resource('cart', 'CartController');
-Route::resource('notifications', 'NotificationsController');
-Route::resource('order', 'OrderController');
-
-
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('orders', 'OrdersController');
-});
-
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('products', 'ProductController');
-});
-
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('category', 'CategoryController');
-});
-
-Route::namespace('admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('size', 'SizeController');
-});
-
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('user-management', 'UserManagementController');
-});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+	Route::get('/home', 'HomeController@index')->name('home');
+});
+
+// Route::group(['middleware' => 'auth'], function () {
+    
+    //products controller
+    Route::resource('products', 'ProductController');
+    Route::resource('cart', 'CartController');
+    Route::resource('notifications', 'NotificationsController');
+    Route::resource('order', 'OrderController');
+
+
+    Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('orders', 'OrdersController');
+    });
+
+    Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('products', 'ProductController');
+    });
+
+    Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('category', 'CategoryController');
+    });
+
+    Route::namespace('admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('size', 'SizeController');
+    });
+
+    Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('user-management', 'UserManagementController');
+    });
+
+// });

@@ -104,7 +104,8 @@ class CategoryController extends Controller
         $data->description  = $request->description;
 
         $data->save();
-        return back();
+        // return back();
+        return redirect('admin/category');
     }
 
     /**

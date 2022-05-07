@@ -37,7 +37,7 @@
 
                               <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->lastName }}
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">

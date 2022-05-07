@@ -3,14 +3,14 @@
     data-bs-backdrop="false" aria-labelledby="offcanvasExampleLabel">
     <div class="container offcanvas-body p-3">
 
-        <div class="offcanvas-header">
+        {{-- <div class="offcanvas-header">
             <button type="button" class="btn-close text-reset bg-secondary" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
+        </div> --}}
 
         <nav class="navbar-dark">
             <ul class="navbar-nav">
                 
-                <hr>
+                {{-- <hr> --}}
 
                 {{-- <li>
                     <a href="{{ route('admin.home') }}" class="nav-link">
@@ -19,13 +19,13 @@
                 </li> --}}
 
                 <li>
-                    <a href="" class="nav-link">
+                    <a href="" class="nav-link active">
                        Dashboard
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{route('admin.orders.index')}}" class="nav-link">
+                    <a href="{{route('admin.orders.index')}}" class="nav-link active">
                        Orders
                     </a>
                 </li>
@@ -40,12 +40,11 @@
                         </span>
                     </a>
 
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse show" id="collapseExample">
                         <ul class="list-group">
-
                             <li class="list-group-item bg-dark">
-                                <a class="nav-link text-white" href="{{ route('admin.products.index') }}">
-                                    Products
+                                <a class="nav-link text-white" href="{{ route('admin.size.index') }}">
+                                   Size
                                 </a> 
                             </li>
 
@@ -56,10 +55,11 @@
                             </li>
 
                             <li class="list-group-item bg-dark">
-                                <a class="nav-link text-white" href="{{ route('admin.size.index') }}">
-                                   Size
+                                <a class="nav-link text-white" href="{{ route('admin.products.index') }}">
+                                    Products
                                 </a> 
                             </li>
+
 
                             <hr>
 
