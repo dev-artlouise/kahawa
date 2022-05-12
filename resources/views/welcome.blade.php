@@ -38,11 +38,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
-                    <div class="hero__text">
-                        <span class="text-secondary">KAHAWA</span>
-                        <h2>Slogan<br/>Here</h2>
-                        <p>Free Pickup and Delivery Available</p>
+                <div class="hero__item set-bg" data-setbg="img/hero/banner4.jpg">
+                    <div class="hero__text ">
+                        <span class="text-white">KAHAWA</span>
+                        <h2 class="text-white">Slogan<br/>Here</h2>
+                        <p class="text-white">Free Pickup and Delivery Available</p>
                         <a href="#" class="primary-btn bg-secondary">ORDER NOW</a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
+    {{-- <div class="row justify-content-center">
         <div class="col-lg-3 col-md-4 col-sm-6">
             
             <div class="card" style="width: 18rem;">
@@ -89,7 +89,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
+    
 </section>
 <!-- Hero Section End -->
 @endsection

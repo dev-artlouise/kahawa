@@ -5,7 +5,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__about__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                        <a class="nav-link" href="./index.html">Kahawa | Coffee Panalo</a>
                     </div>
                     <ul>
                         <li>Address: Putik Road Zamboanga City</li>
