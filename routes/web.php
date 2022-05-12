@@ -26,7 +26,12 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 });
 
+
 // Route::group(['middleware' => 'auth'], function () {
+    
+    Route::namespace('admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('order', 'OrdersController');
+    });
     
     //products controller
     Route::resource('products', 'ProductController');
@@ -35,9 +40,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('order', 'OrderController');
 
 
-    Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::resource('orders', 'OrdersController');
-    });
 
     Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('products', 'ProductController');

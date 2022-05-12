@@ -25,7 +25,7 @@
                 </li>
 
                 <li>
-                    <a href="{{route('admin.orders.index')}}" class="nav-link active">
+                    <a href="{{route('admin.order.index')}}" class="nav-link active">
                        Orders
                     </a>
                 </li>

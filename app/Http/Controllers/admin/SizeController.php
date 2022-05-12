@@ -18,6 +18,7 @@ class SizeController extends Controller
     public function index()
     {
         $data = Size::all();
+        
         return view('pages-admin.settings.sizes.index')
         ->with([
             'data' => $data,
@@ -118,9 +119,15 @@ class SizeController extends Controller
     {
         try {
             DB::table('sizes')->delete($id);
+
+            session()->flash('success', 'Data Deleted');
             return back();
+
         } catch (\Throwable $th) {
-            throw $th;
+            
+            session()->flash('danger', 'Failed to Delete Data');
+            return back();
+            // throw $th;
         }
     }
 }

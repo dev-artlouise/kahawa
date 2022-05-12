@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
-use App\Products;
+use App\Helpers\Helper;
+
+use App\Order;
+use App\Product;
 use App\Size;
+use App\Payment;
 
 class OrdersController extends Controller
 {
@@ -22,12 +28,17 @@ class OrdersController extends Controller
                                 category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
                                 INNER JOIN categories AS category ON products.category_id =  category.id');
 
+        $data       = DB::select('SELECT * FROM `users` 
+                                INNER JOIN orders ON orders.user_id = users.id
+                                GROUP BY orders.customer_name');
+                                
         $sizes      = Size::all();
 
         return view('pages-admin.orders.index')
                 ->with([
                     'products'  => $products,
                     'sizes'     => $sizes,
+                    'data'     => $data,
                 ]);
     }
 
@@ -49,7 +60,52 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $data_order = new Order;
+
+            $order_number = Helper::IDGenerator($data_order, 'order_number', 5, 'ORDER');
+
+            $orders = $request->input('rows');
+
+            foreach ($orders as $rows) {
+
+                $data [] = [
+                    'order_number'  => $order_number,
+                    'customer_name' => $request->customer_name,
+                    'order_type'    => $request->order_type,
+                    'remarks'       => $request->remarks,
+                    'status'        => 'Pending',
+
+                    'quantity'      => $rows['quantity'],
+
+                    'user_id'       => Auth::user()->id,
+                    'product_id'    => $rows['product_id'],
+                    'size_id'       => $rows['size_id'],
+
+                    'created_at'    => today(),
+                    'updated_at'    => today(),
+                ];
+            }
+
+            $insert_order = Order::insert($data);
+
+            $payment = new Payment;
+
+            $payment->total_amount      = $request->total_amount;
+            $payment->payment_status    = 'Not Paid';
+            $payment->remarks           = $request->remarks;
+            $payment->user_id           = Auth::user()->id;
+            $payment->order_id          = Order::latest('id')->first()->id;
+
+            $payment->save();
+
+            return back();
+
+        } catch (\Throwable $th) {
+            
+            throw $th;
+        }
     }
 
     /**
@@ -71,7 +127,13 @@ class OrdersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data       = DB::select('SELECT * FROM orders 
+                            INNER JOIN users    ON orders.user_id       = users.id
+                            INNER JOIN products ON orders.product_id    = products.id
+                            INNER JOIN sizes    ON orders.size_id       = sizes.id
+                            WHERE orders.order_number = ?',[$id]);
+
+        return view('pages-admin.orders.show');
     }
 
     /**
@@ -83,7 +145,21 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $sql = DB::update(
+                'UPDATE orders SET updated_at = ?, remarks = ?, status = ? WHERE order_number = ?',
+                [today(), $request->remarks, $request->status, $id]
+            );
+            
+            session()->flash('success', 'Data Updated successfuly');
+            return back();
+
+        } catch (\Throwable $th) {
+
+            session()->flash('danger', 'Data Failed to Update');
+            return back();
+            // throw $th;
+        }
     }
 
     /**
@@ -94,6 +170,18 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+            DB::table('orders')->delete($id);
+
+            session()->flash('success', 'Data Deleted');
+            return back();
+
+        } catch (\Throwable $th) {
+
+            session()->flash('danger', 'Failed to Delete Data');
+            return back();
+            // throw $th;
+        }
     }
 }

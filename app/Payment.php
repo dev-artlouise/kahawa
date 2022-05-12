@@ -11,8 +11,7 @@ class Payment extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name',
-        'description',
+        'remarks',
     ];
 
     protected $timestamp = TRUE;

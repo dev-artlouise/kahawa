@@ -1,7 +1,6 @@
 @extends('pages-admin.app')
 
 @section('content')
-
     <div class="container-fluid">
         <div class="row mt-3">
             <div class="col-xs-12 col-sm-12">
@@ -18,7 +17,6 @@
     
         <div class="card">
             <div class="card-header ">
-    
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
                       <a class="navbar-brand text-secondary" href="#"> <strong> ORDERS </strong> </a>
@@ -31,12 +29,12 @@
 
                         <form class="d-flex">
                           <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createOrder">
                                 New Order
                             </button>
-
-                            @include('pages-admin.orders.create')
                         </form>
+
+                        @include('pages-admin.orders.create')
                       </div>
                     </div>
                   </nav>
@@ -48,6 +46,7 @@
                         <caption>List of Products</caption>
                         <thead class="">
                             <tr>
+                                <th scope="col">#</th>
                                 <th scope="col">Order ID</th>
                                 <th scope="col">Order Date</th>
                                 <th scope="col">Customer Name</th>
@@ -57,23 +56,66 @@
                             </tr>
                         </thead>
                 
-                        <tbody id="">
+                        <tbody>
+                            @foreach ($data as $key => $data)
                             <tr>
-                                <td> <strong>ORDER-000001</strong> </td>
-                                <td> <strong>Timestamp</strong> </td>
-                                <td> <strong>Juan Dela Cruz</strong> </td>
-                                <td> <strong>Pick-Up</strong> </td>
-                                <td> <strong>Cash</strong></td>
+                                <td> {{ ++$key }}</td>
+                                <td> {{ $data->order_number }}</td>
+                                <td> {{ $data->created_at }}</td>
+                                <td> {{ $data->customer_name}}</td>
+                                <td> {{ $data->order_type }}</td>
+                                <td>  Cash </td>
                                 <td>
-                                    <button class="btn btn-warning btn-sm">view</button>
+                                    <a href="{{ route('admin.order.edit', $data->order_number) }}" class="btn btn-warning btn-sm">View</a>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>    
                     </table>
                 </div>   
             </div>
         </div>
     </div>
+@endsection
 
+@section('js')
+<script>
+var i = 1;
+  function AddOrder() {
+    $("#order_table table tbody").append('<tr id="rows'+i+'">' +
+                                            '<td>' +       
+                                                '<select class="form-select" name="rows['+i+'][product_id]" id="flavor">' +
+                                                    '@foreach ($products as $data)' +
+                                                    '<option value="{{ $data->product_id }}"> {{ $data->product_name }} </option>' +
+                                                    '@endforeach' +
+                                                '</select>' + 
+                                            '</td>' +
+
+                                            '<td>' +
+                                                '@foreach ($sizes as $size)' +
+                                                    '<div class="form-check form-check-inline pt-2">' +
+                                                        '<input class="form-check-input" type="radio" name="rows['+i+'][size_id]" id="sizes" value="{{ $size->id }}">' +
+                                                        '<label class="form-check-label" for="size">' +
+                                                            '{{ $size->size }}' +
+                                                        '</label>' +
+                                                    '</div>' +
+                                                '@endforeach'+
+                                            '</td>' +
+                                    
+                                            '<td>' +
+                                                '<input class="form-control" type="number" name="rows['+i+'][quantity]" id="quantity">' +
+                                            '</td>' +
+                                            
+                                            '<td class="td-actions">' +
+                                                '<span class="btn btn-danger remove_data" name="remove" id="'+i+'"> x Remove</span>' +
+                                            '</td>' +
+                                         '</tr>');
+    i++;
     
+    $(document).on('click', '.remove_data', function() {
+      var btnID = $(this).attr("id");
+      $('#rows'+btnID+'').remove();
+    });
+  }
+</script>
 @endsection

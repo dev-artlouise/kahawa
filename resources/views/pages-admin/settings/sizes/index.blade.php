@@ -47,7 +47,7 @@
                         <tbody id="tableBody">
                             @foreach ($data as $size)
                                 <tr>
-                                    <td>{{ $size->id }}</td>
+                                    <td>{{ $size->size_id }}</td>
                                     <td>{{ $size->size }}</td>
                                     <td>{{ $size->price }}</td>
                                     <td>
