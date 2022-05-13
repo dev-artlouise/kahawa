@@ -19,9 +19,8 @@
             </div>
         </div>
                 
-        <div class="row justify-content-center">
-
-            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+        <div class="row justify-content-center">            
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 pb-3">
                 <div class="card">
 
                     <div class="card-body">
@@ -36,7 +35,7 @@
                             </div>
 
                             <div class="col-6 mb-3">
-                                <strong>Juan Dela Cruz</strong> 
+                                <strong>{{ $data[0]->firstName }} {{ $data[0]->lastName }}</strong> 
                             </div>
 
                             <div class="col-6">
@@ -44,7 +43,7 @@
                             </div>
 
                             <div class="col-6 mb-3">
-                                <strong>Sta Maria</strong> 
+                                <strong>{{ $data[0]->address }}</strong> 
                             </div>
 
                             <div class="col-6">
@@ -52,7 +51,7 @@
                             </div>
 
                             <div class="col-6 mb-3">
-                                <strong>090909090909</strong> 
+                                <strong>{{ $data[0]->contactNumber }}</strong> 
                             </div>
 
                             <div class="col-6">
@@ -60,7 +59,7 @@
                             </div>
 
                             <div class="col-6 mb-3">
-                                <strong>Zamboanga</strong> 
+                                <strong>{{ $data[0]->city }}</strong> 
                             </div>
 
                             <div class="col-6">
@@ -68,7 +67,7 @@
                             </div>
 
                             <div class="col-6 mb-3">
-                                <strong>email@gmail.com</strong> 
+                                <strong>{{ $data[0]->email }}</strong> 
                             </div>
 
                         </div>
@@ -77,55 +76,36 @@
                         
                         <h4 class="text-secondary text-center"> <strong>ORDER SUMMARY</strong> </h4>
 
-                        <div class="mt-3 row container">
+                        <div class="mt-3 row container-fluid">
 
-                            <div class="col-6">
-                                Order ID: 
-                            </div>
-
-                            <div class="col-6 mb-3">
-                                <strong>ORDER-000001</strong>
-                            </div>
-
-                            <div class="col-6">
-                                Product Name: 
-                            </div>
-
-                            <div class="col-6 mb-3">
-                                <strong>Kahawa Latte</strong>
-                            </div>
-
-                            <div class="col-6">
-                                Category: 
-                            </div>
-
-                            <div class="col-6 mb-3">
-                                <strong>Beverages</strong> 
-                            </div>
-
-                            <div class="col-6">
-                                Size: 
-                            </div>
-
-                            <div class="col-6 mb-3">
-                                <strong>12oz</strong> 
-                            </div>
-
-                            <div class="col-6">
-                                Price: 
-                            </div>
-
-                            <div class="col-6 mb-3">
-                                <strong>59</strong> 
-                            </div>
-
-                            <div class="col-6">
-                                Quantity: 
-                            </div>
-
-                            <div class="col-6 mb-3">
-                                <strong>1</strong> 
-                            </div>
+                            <table class="table table-sm table-hover text-center">
+                                <caption>List of Products</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Order ID</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Size</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Qty</th>
+                                    </tr>
+                                </thead>
+                        
+                                <tbody>
+                                    @foreach ($data as $key => $item)
+                                    <tr>
+                                        <td> {{ ++$key }}</td>
+                                        <td> {{ $item->order_number }}</td>
+                                        <td> {{ $item->product_name }}</td>
+                                        <td> {{ $item->name}}</td>
+                                        <td> {{ $item->size }}</td>
+                                        <td> {{ $item->price }}</td>
+                                        <td> {{ $item->quantity }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>    
+                            </table>
 
                             <hr>
                             
@@ -151,7 +131,7 @@
                             </div>
 
                             <div class="col-6 mb-3">
-                                <strong>Pick-Up</strong> 
+                                <strong>{{ $data[0]->order_type }}</strong> 
                             </div>
 
                             <div class="col-6">
@@ -168,11 +148,9 @@
 
                             <div class="col-6 mb-3">
                                 {{--status pending default--}}
-                                <span class="badge bg-warning">Pending</span>
                                 {{--if have ya status moving--}}
                                 {{-- 
                                     if admin accepts order then 
-                                    <span class="badge bg-primary">In-Process</span>
 
                                     if order type is pickup then 
                                     <span class="badge bg-info">Ready for Pick-Up</span> 
@@ -182,6 +160,17 @@
 
                                     <span class="badge bg-success">Completed</span> 
                                 --}}
+                                @if (strlen($data[0]->status == 'Pending'))
+                                    <span class="badge bg-warning">{{ $data[0]->status }}</span>
+                                @elseif (strlen($data[0]->status == 'In Process'))
+                                    <span class="badge bg-primary">{{ $data[0]->status }}</span>
+                                @elseif (strlen($data[0]->status == 'Ready to pick-up'))
+                                    <span class="badge bg-primary">{{ $data[0]->status }}</span>
+                                @elseif (strlen($data[0]->status == 'Complete'))
+                                    <span class="badge bg-success">{{ $data[0]->status }}</span>
+                                @elseif (strlen($data[0]->status == 'Rejected'))
+                                    <span class="badge bg-danger">{{ $data[0]->status }}</span>
+                                @endif
                             </div>
 
                             <div class="col-6">
@@ -189,40 +178,41 @@
                             </div>
 
                             <div class="col-6 mb-3">
-                                <strong>P59</strong> 
+                              59
                             </div>
 
                             <hr>
 
-                            <div class="float-end">
-                                
-                                <form action="">
-                                    <button type="submit" class="mt-2 btn btn-success"> 
-                                        Accept Order
-                                        {{--notify customer na in-process na ang order--}}
+                            <div class="col text-center">
+                                @if (strlen($data[0]->status == 'Pending'))
+                                    <form action="{{ route('admin.order.update', $data[0]->order_number) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <button type="submit" name="status" class="btn btn-success" value="In Process">Accept Order</button>
+                                    </form>
+
+                                    <button class="mt-2 btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectOrder"> 
+                                        Reject Order
                                     </button>
-                                </form>
+                                    
+                                    @include('pages-admin.orders.reject')
 
-                                <button class="mt-2 btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectOrder"> 
-                                    Reject Order
-                                    {{--notify customer na rejected and order nya--}}
-                                </button>
-                                
-                                @include('pages-admin.orders.reject')
+                                @elseif (strlen($data[0]->status == 'In Process'))
+                                    <form action="{{ route('admin.order.update', $data[0]->order_number) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
 
-                                {{--if order is accepted lalabas itong button else if rejected mawawala lahat ng buttons
-                                then change status into rejected --}}
-                                
-                                <form action="">
-                                    <button type="submit" class="mt-2 btn btn-primary"> 
-                                        Preparation Completed
-                                        {{-- if order is pick up type change status and notify customer na ready to pick up anf order --}}
-                                        {{--else if order is delivery then change status and notify customer na out-for delivery ang order--}}
-                                        {{--notify customer na in-process na ang order--}}
-                                    </button>
-                                </form>
-                                
+                                        <button type="submit" name="status" class="btn btn-primary" value="Ready to pick-up">Preparation Complete</button>
+                                    </form>
+                                @elseif (strlen($data[0]->status == 'Ready to pick-up'))
+                                    <form action="{{ route('admin.order.update', $data[0]->order_number) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
 
+                                        <button type="submit" name="status" class="btn btn-success" value="Complete">Complete</button>
+                                    </form>
+                                @endif
                             </div>
  
                         </div>

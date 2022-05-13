@@ -7,8 +7,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="#" method="post">
+            <form action="{{ route('admin.order.update', $data[0]->order_number) }}" method="POST">
                 @csrf
+                @method('PUT')
 
                 <div class="modal-body">
                     <div class="container ">

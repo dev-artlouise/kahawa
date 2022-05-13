@@ -1,62 +1,102 @@
 @extends('app')
 
 @section('content')
-    
-    <div class="card">
-       
-        <div class="card-body">
+<table id="cart" class="table table-hover table-condensed">
+    <thead>
+        <tr>
+            <th style="width:50%">Product</th>
+            <th style="width:8%">Quantity</th>
+            <th style="width:22%" class="text-center">Subtotal</th>
+            <th style="width:10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @php $total = 0 @endphp
 
-            <div>
-                <h4 class="text-secondary text-center"> <strong> My Cart </strong></h4> 
-                <hr>
-            </div>
-
-           <div class="list-group">
-               <div class="p-3 list-group-item">
-                    <span class="name label label-info" style="min-width: 120px; display: inline-block;">
-                        <div class="hstack gap-3">
-                            <div class=""> <strong>Product Image</strong></div>
-                            {{-- <div class="">Ref No: {{$data->barangayNumber}}</div> --}}
-                            <div class="vr"></div>
+        @if(session('cart'))
+            @foreach(session('cart') as $id => $details)
+                @php $total += $details['price'] * $details['quantity'] @endphp
+                
+                <tr data-id="{{ $id }}">
+                    <td data-th="Product">
+                        <div class="row">
+                            {{-- <div class="col-sm-3 hidden-xs"><img src="{{ $details['product_image'] }}" width="100" height="100" class="img-responsive"/></div> --}}
+                            <div class="col-sm-9">
+                                <h4 class="nomargin">{{ $details['name'] }}</h4>
+                            </div>
                         </div>
-                    </span> 
+                    </td>
 
-                    <span class="name label label-info" style="min-width: 120px; display: inline-block;">
-                        <div class="hstack gap-3">
-                            <div class=""> <strong>Product Name</strong></div>
-                            {{-- <div class="">Ref No: {{$data->barangayNumber}}</div> --}}
-                            <div class="vr"></div>
-                        </div>
-                    </span>
 
-                    <span class="name label label-info" style="min-width: 120px; display: inline-block;">
-                        <div class="hstack gap-3">
-                            <div class=""> <strong>Product Price</strong></div>
-                            {{-- <div class="">Ref No: {{$data->barangayNumber}}</div> --}}
-                            <div class="vr"></div>
-                        </div>
-                    </span>
-                    
-                    
-                    <div class="float-end">
-                        <button class="btn btn-outline-danger btn-sm">Remove</button> 
-                    </div>
+                    <td data-th="Quantity">
+                        <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
+                    </td>
 
-                </div> 
-           </div>
+                    <td data-th="Price">${{ $details['price'] }}</td>
 
-           <div class="mt-3">
-
-                <div class="float-start">
-                    <h3 class="text-secondaty">TOTAL: P<strong><u>400<u></strong> </h3>
-                </div>
-
-                <a href="{{ route('order.create') }}" class="float-end btn btn-secondary btn-lg">
-                    Check Out
-                </a>
-           </div>
-          
-        </div>
-    </div>
-
+                    {{-- <td data-th="Subtotal" class="text-center">${{ $cdetails['price'] * $details['quantity'] }}</td> --}}
+                   
+                    <td class="actions" data-th="">
+                        <button class="btn btn-danger btn-sm" id="remove-from-cart"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+            @endforeach
+        @endif
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" class="text-right"><h3><strong>Total ${{ $total }}</strong></h3></td>
+        </tr>
+        <tr>
+            <td colspan="5" class="text-right">
+                <a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+                <button class="btn btn-success">Checkout</button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
 @endsection
+  
+@section('js')
+{{-- <script >
+    $(".update-cart").change(function (e) {
+        e.preventDefault();
+  
+        var ele = $(this);
+  
+        $.ajax({
+            url: '{{ route('update.cart') }}',
+            method: "patch",
+            data: {
+                _token: '{{ csrf_token() }}', 
+                id: ele.parents("tr").attr("data-id"), 
+                quantity: ele.parents("tr").find(".quantity").val()
+            },
+            success: function (response) {
+               window.location.reload();
+            }
+        });
+    });
+  
+    $("#remove-from-cart").click(function (e) {
+        e.preventDefault();
+  
+        var ele = $(this);
+  
+        if(confirm("Are you sure want to remove?")) {
+            $.ajax({
+                url: '{{ route('remove.from.cart') }}',
+                method: "DELETE",
+                data: {
+                    _token: '{{ csrf_token() }}', 
+                    id: ele.parents("tr").attr("data-id")
+                },
+                success: function (response) {
+                    window.location.reload();
+                }
+            });
+        }
+    });
+  
+</script> --}}
+@endsection 

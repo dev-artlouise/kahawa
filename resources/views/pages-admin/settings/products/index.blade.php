@@ -52,14 +52,14 @@
                             @foreach ($data as $key => $product)
                                 <tr>
                                     <td> {{ ++$key }} </td>
-                                    <td> <img src="{{ asset('uploads/'. $product->image )}}" alt="product image" height="50" width="50"> </td>
+                                    <td> <img src="{{ asset('uploads/'. $product->product_image )}}" alt="product image" height="50" width="50"> </td>
                                     <td> {{ $product->product_name }}</td>
                                     <td> {{ $product->category_name }}</td>
                                     <td>
                                         <div class="d-flex justify-content-center">
                                             <a role="button" href="#" class="btn btn-primary btn-sm me-2 ">Edit</a>
 
-                                            <form action="#" method="POST">
+                                            <form action="{{ route('admin.products.destroy', $product->product_id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
 

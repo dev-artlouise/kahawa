@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $products   = DB::select('SELECT products.id AS product_id, product_name, product_description, product_image, products.category_id,
+        category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
+        INNER JOIN categories AS category ON products.category_id =  category.id');
+
+    return view('welcome')->with([
+        'products'  => $products,
+    ]);
 });
 
 
@@ -27,19 +37,17 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 });
 
 
-// Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () {
     
-    Route::namespace('admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::resource('order', 'OrdersController');
-    });
-    
-    //products controller
     Route::resource('products', 'ProductController');
     Route::resource('cart', 'CartController');
     Route::resource('notifications', 'NotificationsController');
     Route::resource('order', 'OrderController');
 
-
+    
+    Route::namespace('admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('order', 'OrdersController');
+    });
 
     Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('products', 'ProductController');
@@ -57,4 +65,4 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('user-management', 'UserManagementController');
     });
 
-// });
+});

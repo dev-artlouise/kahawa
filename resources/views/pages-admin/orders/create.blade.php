@@ -102,7 +102,7 @@
                                                     <div class="form-check form-check-inline pt-2">
                                                         <input class="form-check-input" type="radio" name="rows[0][size_id]" id="sizes" value="{{ $size->id }}">
                                                         <label class="form-check-label" for="size">
-                                                            {{ $size->size }}
+                                                            {{ $size->size }} ({{ $size->price }} php)
                                                         </label>
                                                     </div>
                                                 @endforeach
@@ -119,6 +119,16 @@
                                             </td>
                                         </tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td> Total Amount
+                                                <input type="number" class="form-control" name="total_amount" id="total_amount">
+                                            </td>
+                                        </tr>
+
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -126,7 +136,7 @@
                         <div class="row pt-0">
                             <div class="col-md-1 offset-md-10">
                                 Total Amount:
-                                <input type="number" class="form-control" name="total_amount" id="total_amount">
+                                {{-- <input type="number" class="form-control" name="total_amount" id="total_amount"> --}}
                             </div>
 
                         </div>

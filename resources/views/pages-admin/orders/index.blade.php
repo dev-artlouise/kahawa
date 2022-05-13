@@ -96,7 +96,7 @@ var i = 1;
                                                     '<div class="form-check form-check-inline pt-2">' +
                                                         '<input class="form-check-input" type="radio" name="rows['+i+'][size_id]" id="sizes" value="{{ $size->id }}">' +
                                                         '<label class="form-check-label" for="size">' +
-                                                            '{{ $size->size }}' +
+                                                            '{{ $size->size }} ({{ $size->price }} php)' +
                                                         '</label>' +
                                                     '</div>' +
                                                 '@endforeach'+
@@ -117,5 +117,23 @@ var i = 1;
       $('#rows'+btnID+'').remove();
     });
   }
+
+    $(document).ready(function() {
+            $('table thead th').each(function(i) {
+                calculateColumn(i);
+            });
+    });
+
+    function calculateColumn(index) {
+        var total = 0;
+
+        $('table tr #quantity').each(function() {
+            var value = parseInt($('#quantity', this).eq(index).text());
+            if (!isNaN(value)) {
+                total += value;
+            }
+        });
+        $('.total_amount').eq(index).text(total);
+    }
 </script>
 @endsection

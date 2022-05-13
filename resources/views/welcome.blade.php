@@ -9,11 +9,12 @@
                 <div class="hero__categories">
                     <div class="hero__categories__all bg-secondary">
                         <i class="fa fa-bars"></i>
-                        <span>Categories</span>
+                        <span>LANJAL KAMO!</span>
                     </div>
                     <ul>
-                        <li><a href="#">Beverages</a></li>
-                        <li><a href="#">Sweets</a></li>
+                        <li> <span>  "ASSALALMWALAIKUM" </span></li>
+                        {{-- <li><a href="#">Beverages</a></li>
+                        <li><a href="#">Sweets</a></li> --}}
                     </ul>
                 </div>
             </div>
@@ -33,17 +34,17 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="hero__search__phone__text">
-                            <h5>number here</h5>
-                            <span>Contact Number</span>
+                            <h5>Contact Number</h5>
+                            <span>09457698770</span>
                         </div>
                     </div>
                 </div>
                 <div class="hero__item set-bg" data-setbg="img/hero/banner4.jpg">
                     <div class="hero__text ">
                         <span class="text-white">KAHAWA</span>
-                        <h2 class="text-white">Slogan<br/>Here</h2>
+                        <h2 class="text-white">COFFEE PANALO</h2>
                         <p class="text-white">Free Pickup and Delivery Available</p>
-                        <a href="#" class="primary-btn bg-secondary">ORDER NOW</a>
+                        <a href="{{ route('order.create')}}" class="primary-btn bg-secondary">ORDER NOW</a>
                     </div>
                 </div>
             </div>
@@ -61,11 +62,36 @@
             <div class="featured__controls">
                 <ul>
                     <li class="active" data-filter="*">All</li>
-                    <li data-filter=".oranges">Beverages</li>
-                    <li data-filter=".fresh-meat">Sweet</li>
+                    {{-- <li data-filter=".oranges">Beverages</li>
+                    <li data-filter=".fresh-meat">Sweet</li> --}}
                 </ul>
             </div>
         </div>
+    </div>
+
+    <div class="row justify-content-center">
+        @foreach($products as $product)
+            <div class="col-xs-18 col-sm-6 col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="thumbnail">
+                            <img src="{{ asset('uploads/'.  $product->product_image )}}" alt="">
+                            <div class="caption">
+                                <h4>{{ $product->product_name }}</h4>
+                                <p>{{ $product->product_description }}</p>
+                                <div class="text-center">
+                                    <p class="btn-holder">
+                                        <a href="{{ route('products.create') }}" class="btn btn-warning btn-block text-center" role="button">
+                                            <i class="fa fa-shopping-cart"></i>  Order Now
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
 
     {{-- <div class="row justify-content-center">

@@ -19,7 +19,7 @@
                         </div>
 
                         <div class="col-6 mb-3">
-                            <strong>Juan Dela Cruz</strong> 
+                            <strong>{{ $data[0]->firstName }} {{ $data[0]->lastName }}</strong> 
                         </div>
 
                         <div class="col-6">
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="col-6 mb-3">
-                            <strong>Sta Maria</strong> 
+                            <strong>{{ $data[0]->address }}</strong> 
                         </div>
 
                         <div class="col-6">
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="col-6 mb-3">
-                            <strong>090909090909</strong> 
+                            <strong>{{ $data[0]->contactNumber }}</strong> 
                         </div>
 
                         <div class="col-6">
@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="col-6 mb-3">
-                            <strong>Zamboanga</strong> 
+                            <strong>{{ $data[0]->city }}</strong> 
                         </div>
 
                         <div class="col-6">
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="col-6 mb-3">
-                            <strong>email@gmail.com</strong> 
+                            <strong>{{ $data[0]->email }}</strong> 
                         </div>
 
                     </div>
@@ -60,55 +60,36 @@
                     
                     <h4 class="text-secondary text-center"> <strong>ORDER SUMMARY</strong> </h4>
 
-                    <div class="mt-3 row container">
+                    <div class="mt-3 row container-fluid">
 
-                        <div class="col-6">
-                            Order ID: 
-                        </div>
-
-                        <div class="col-6 mb-3">
-                            <strong>ORDER-000001</strong>
-                        </div>
-
-                        <div class="col-6">
-                            Product Name: 
-                        </div>
-
-                        <div class="col-6 mb-3">
-                            <strong>Kahawa Latte</strong>
-                        </div>
-
-                        <div class="col-6">
-                            Category: 
-                        </div>
-
-                        <div class="col-6 mb-3">
-                            <strong>Beverages</strong> 
-                        </div>
-
-                        <div class="col-6">
-                            Size: 
-                        </div>
-
-                        <div class="col-6 mb-3">
-                            <strong>12oz</strong> 
-                        </div>
-
-                        <div class="col-6">
-                            Price: 
-                        </div>
-
-                        <div class="col-6 mb-3">
-                            <strong>59</strong> 
-                        </div>
-
-                        <div class="col-6">
-                            Quantity: 
-                        </div>
-
-                        <div class="col-6 mb-3">
-                            <strong>1</strong> 
-                        </div>
+                        <table class="table table-sm table-hover text-center">
+                            <caption>List of Products</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Size</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Qty</th>
+                                </tr>
+                            </thead>
+                    
+                            <tbody>
+                                @foreach ($data as $key => $item)
+                                <tr>
+                                    <td> {{ ++$key }}</td>
+                                    <td> {{ $item->order_number }}</td>
+                                    <td> {{ $item->product_name }}</td>
+                                    <td> {{ $item->name}}</td>
+                                    <td> {{ $item->size }}</td>
+                                    <td> {{ $item->price }}</td>
+                                    <td> {{ $item->quantity }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>    
+                        </table>
 
                         <hr>
                         
@@ -129,36 +110,12 @@
 
                     <div class="row container">
 
-                        {{-- if order status is in process then change oeder type and payment type fields into static fields--}}
-                        
-                        <div class="col-12 mt-3 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" name="order_type" id="floatingSelect" aria-label="Floating label select example">
-                                  <option selected>Select Order Type</option>
-                                  <option value="Pick-Up">Pick-Up</option>
-                                  <option value="Delivery">Delivery</option>
-                                </select>
-                                <label for="floatingSelect">Order Type</label>
-                            </div>
-                        </div>
-
-                        <div class="col-12 mt-3 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" name="payment_type" id="floatingSelect" aria-label="Floating label select example">
-                                  <option selected>Select Payment Type</option>
-                                  <option value="Cash On Delivery (COD)">Cash On Delivery (COD)</option>
-                                  <option value="Online Payment">Online Payment</option>
-                                </select>
-                                <label for="floatingSelect">Payment Type</label>
-                            </div>
-                        </div>
-
                         <div class="col-6">
                             Order Type: 
                         </div>
 
                         <div class="col-6 mb-3">
-                            <strong>Pick-Up</strong> 
+                            <strong>{{ $data[0]->order_type }}</strong> 
                         </div>
 
                         <div class="col-6">
@@ -169,28 +126,24 @@
                             <strong>Cash On Delivery</strong> 
                         </div>
 
-                        {{-- if order status is in process then change oeder type and payment type fields into static fields --}}
-
                         <div class="col-6">
                             Status: 
                         </div>
 
                         <div class="col-6 mb-3">
-                            {{--status pending default--}}
-                            <span class="badge bg-warning">Pending</span>
-                            {{--if have ya status moving--}}
-                            {{-- 
-                                if admin accepts order then 
-                                <span class="badge bg-primary">In-Process</span>
-
-                                if order type is pickup then 
-                                <span class="badge bg-info">Ready for Pick-Up</span> 
-
-                                else if order type is cash on delivery then
-                                <span class="badge bg-info">Out for Delivery</span> 
-
-                                <span class="badge bg-success">Completed</span> 
-                            --}}
+                            @if (strlen($data[0]->status == 'Pending'))
+                                <span class="badge bg-warning">{{ $data[0]->status }}</span>
+                            @elseif (strlen($data[0]->status == 'In Process'))
+                                <span class="badge bg-primary">{{ $data[0]->status }}</span>
+                            @elseif (strlen($data[0]->status == 'Ready to pick-up'))
+                                <span class="badge bg-primary">{{ $data[0]->status }}</span>
+                            @elseif (strlen($data[0]->status == 'Complete'))
+                                <span class="badge bg-success">{{ $data[0]->status }}</span>
+                            @elseif (strlen($data[0]->status == 'Rejected'))
+                                <span class="badge bg-danger">{{ $data[0]->status }}</span>
+                                @elseif (strlen($data[0]->status == 'Cancel'))
+                                <span class="badge bg-danger">{{ $data[0]->status }}</span>
+                            @endif
                         </div>
 
                         <div class="col-6">
@@ -198,26 +151,22 @@
                         </div>
 
                         <div class="col-6 mb-3">
-                            <strong>P59</strong> 
+                          59
                         </div>
 
                         <hr>
 
-                        <form action="">
-                            <button type="submit" class="mt-2 float-end btn btn-danger btn-lg"> 
-                                Cancel Order
-                                {{--if In process and completed mawala ang cancel order button--}}
-                                {{--notify admin na cancel order para stop na ang preparing--}}
-                            </button>
-                        </form>
+                        <div class="col text-center">
+                            @if (strlen($data[0]->status == 'Pending'))
+                                <form action="{{ route('order.update', $data[0]->order_number) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
 
-                        {{-- if order type is pick up or delivery --}}
-                        <form action="">
-                            <button type="submit" class="mt-2 float-end btn btn-primary btn-lg"> 
-                                Order Claimed
-                            </button>
-                        </form>
-         
+                                    <button type="submit" name="status" class="btn btn-danger" value="Cancel">Cancel Order</button>
+                                </form>
+                            @endif
+                        </div>
+
                     </div>
  
                 </div>

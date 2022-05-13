@@ -24,7 +24,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $products   = DB::select('SELECT products.id AS product_id, products.name AS product_name, products.description AS product_description, products.image, products.category_id,
+        $products   = DB::select('SELECT products.id AS product_id, product_name, product_description, product_image, products.category_id,
                                 category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
                                 INNER JOIN categories AS category ON products.category_id =  category.id');
 
@@ -104,7 +104,8 @@ class OrdersController extends Controller
 
         } catch (\Throwable $th) {
             
-            throw $th;
+            return back();
+            // throw $th;
         }
     }
 
@@ -128,12 +129,14 @@ class OrdersController extends Controller
     public function edit($id)
     {
         $data       = DB::select('SELECT * FROM orders 
-                            INNER JOIN users    ON orders.user_id       = users.id
-                            INNER JOIN products ON orders.product_id    = products.id
-                            INNER JOIN sizes    ON orders.size_id       = sizes.id
+                            INNER JOIN users     ON orders.user_id       = users.id
+                            INNER JOIN products  ON orders.product_id    = products.id
+                            INNER JOIN sizes     ON orders.size_id       = sizes.id
+                            LEFT JOIN categories ON products.category_id =  categories.id
                             WHERE orders.order_number = ?',[$id]);
 
-        return view('pages-admin.orders.show');
+        return view('pages-admin.orders.show')
+            ->with([ 'data' => $data, ]);
     }
 
     /**

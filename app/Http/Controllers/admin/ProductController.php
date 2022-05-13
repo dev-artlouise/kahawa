@@ -5,7 +5,6 @@ namespace App\Http\Controllers\admin;
 use App\Product;
 use App\Category;
 
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -21,9 +20,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data       = DB::select('SELECT products.id AS product_id, products.name AS product_name, products.description AS product_description, products.image, products.category_id,
+        $data       = DB::select('SELECT products.id AS product_id, product_name, product_description, product_image, products.category_id,
                                 category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
                                 INNER JOIN categories AS category ON products.category_id =  category.id');
+
         $category   = Category::all();
 
         return view('pages-admin.settings.products.index')
@@ -51,37 +51,37 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'nullable',
-            'image' => 'nullable',
+        try {
+            $request->validate([
+                'name' => 'required',
+            ]);
 
-            // 'category' => 'required',
-            // 'size' => 'required',
-        ]);
+            $data = new Product;
 
-        $data = new Product;
+            $data->category_id          = $request->category_id;
+            $data->product_name         = $request->name;
+            $data->product_description  = $request->description;
 
-        $data->category_id  = $request->category_id;
-        $data->name         = $request->name;
-        $data->description  = $request->description;
+            if ($request->hasfile('image')) {
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '.' . $extension;
+                $file->move('uploads/', $filename);
+                $data->product_image = $filename;
+            } else {
+                return $request;
+                $data->product_image = '';
+            }
 
-        if ($request->hasfile('image')) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $file->move('uploads/', $filename);
-            $data->image = $filename;
-        } else {
-            return $request;
-            $data->image = '';
+            // $data->category_id = $request->category_id;
+            // $data->size_id = $request->size_id;
+
+            $data->save();
+            return back();
+
+        } catch (\Throwable $th) {
+            throw $th;
         }
-
-        // $data->category_id = $request->category_id;
-        // $data->size_id = $request->size_id;
-
-        $data->save();
-        return back();
 
     }
 
@@ -127,6 +127,17 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::table('products')->delete($id);
+
+            session()->flash('success', 'Data Deleted');
+            return back();
+
+        } catch (\Throwable $th) {
+            
+            session()->flash('danger', 'Failed to Delete Data');
+            return back();
+            // throw $th;
+        }
     }
 }
