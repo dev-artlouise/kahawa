@@ -95,7 +95,7 @@ class OrderController extends Controller
             $payment->payment_status    = 'Not Paid';
             $payment->remarks           = $request->remarks;
             $payment->user_id           = Auth::user()->id;
-            $payment->order_id          = Order::latest('id')->first()->id;
+            $payment->order_number      = Order::latest('id')->first()->order_number;
 
             $payment->save();
 
@@ -127,14 +127,21 @@ class OrderController extends Controller
                             LEFT JOIN categories ON products.category_id =  categories.id
                             WHERE orders.user_id = ?
                             GROUP BY orders.order_number',[$id]);
-            
+
+        $payment   = DB::select('SELECT * FROM `payments` 
+                        INNER JOIN users    ON payments.user_id         = users.id
+                        INNER JOIN orders   ON payments.order_number    = orders.order_number
+                        WHERE payments.user_id = ?
+                        GROUP BY payments.order_number',[$id]);
+
         $sizes      = Size::all();
 
         return view('pages-user.orders.index')
             ->with([
             'products'  => $products,
             'sizes'     => $sizes,
-            'data'     => $data,
+            'data'      => $data,
+            'payment'   => $payment,
             ]);
     }
 
@@ -154,8 +161,13 @@ class OrderController extends Controller
                             LEFT JOIN categories ON products.category_id =  categories.id
                             WHERE orders.order_number = ?',[$id]);
 
+        $payment   = DB::select('SELECT * FROM `payments` 
+                            INNER JOIN users    ON payments.user_id         = users.id
+                            INNER JOIN orders   ON payments.order_number    = orders.order_number
+                            WHERE payments.order_number = ?',[$id]);
+
         return view('pages-user.orders.show')
-            ->with([ 'data' => $data, ]);
+            ->with([ 'data' => $data, 'payment' => $payment, ]);
         
     }
 

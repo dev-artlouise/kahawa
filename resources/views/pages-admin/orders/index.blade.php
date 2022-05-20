@@ -80,9 +80,17 @@
 
 @section('js')
 <script>
-var i = 1;
-  function AddOrder() {
-    $("#order_table table tbody").append('<tr id="rows'+i+'">' +
+    
+
+    $(document).ready(function() {
+        $("#order_table table tbody").on("keyup", ".price, .quantity", function(){
+            mults(this);
+        })
+    }); 
+
+    var i = 1;
+    function AddOrder() {
+    $("#order_table table tbody").append('<tr class="data_row" id="rows'+i+'">' +
                                             '<td>' +       
                                                 '<select class="form-select" name="rows['+i+'][product_id]" id="flavor">' +
                                                     '@foreach ($products as $data)' +
@@ -93,9 +101,10 @@ var i = 1;
 
                                             '<td>' +
                                                 '@foreach ($sizes as $size)' +
+                                                '<input class="form-check-input" type="hidden" name="rows['+i+'][size_id]" id="sizes" value="{{ $size->id }}">' +
                                                     '<div class="form-check form-check-inline pt-2">' +
-                                                        '<input class="form-check-input" type="radio" name="rows['+i+'][size_id]" id="sizes" value="{{ $size->id }}">' +
-                                                        '<label class="form-check-label" for="size">' +
+                                                        '<input class="form-check-input price" type="radio" name="rows['+i+'][size]" id="sizes" value="{{ $size->price }}">' +
+                                                        '<label class="form-check-label" id="price" for="size" value="{{ $size->id }}">' +
                                                             '{{ $size->size }} ({{ $size->price }} php)' +
                                                         '</label>' +
                                                     '</div>' +
@@ -103,7 +112,11 @@ var i = 1;
                                             '</td>' +
                                     
                                             '<td>' +
-                                                '<input class="form-control" type="number" name="rows['+i+'][quantity]" id="quantity">' +
+                                                '<input class="form-control quantity" type="number" name="rows['+i+'][quantity]" id="quantity">' +
+                                            '</td>' +
+
+                                            '<td>' +
+                                                '<input class="form-control subtotal" type="number" name="subtotal" readonly>' +
                                             '</td>' +
                                             
                                             '<td class="td-actions">' +
@@ -118,22 +131,23 @@ var i = 1;
     });
   }
 
-    $(document).ready(function() {
-            $('table thead th').each(function(i) {
-                calculateColumn(i);
-            });
+    function mults(elem) {
+    var i = 0
+    var quantity    = $(elem).parent().parent().parent().find(".quantity").val();
+    var price       = $(elem).parent().parent().parent().find('input[name="rows['+i+'][size]"]:checked').val();
+
+    var cost        = quantity * price
+
+    var subtotal       = $(elem).parent().parent().parent().find(".subtotal").val(cost);
+
+    var total_amount = 0;
+    $(elem).parents().parent().parent().find(".data_row").each(function(){
+        total_amount += $(this).find(".subtotal").val() ? parseFloat($(this).find(".subtotal").val()) : 0;
     });
 
-    function calculateColumn(index) {
-        var total = 0;
+    var total       = $(elem).parent().parent().parent().parent().find(".total").val(total_amount);
+    console.log(total_amount)
+  }
 
-        $('table tr #quantity').each(function() {
-            var value = parseInt($('#quantity', this).eq(index).text());
-            if (!isNaN(value)) {
-                total += value;
-            }
-        });
-        $('.total_amount').eq(index).text(total);
-    }
 </script>
 @endsection

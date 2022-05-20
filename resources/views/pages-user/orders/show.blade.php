@@ -151,7 +151,7 @@
                         </div>
 
                         <div class="col-6 mb-3">
-                          59
+                            {{ $payment[0]->total_amount }}  Php
                         </div>
 
                         <hr>

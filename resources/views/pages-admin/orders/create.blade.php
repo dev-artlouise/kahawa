@@ -30,6 +30,13 @@
                                     Pick-up
                                     </label>
                                 </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault2" value="Cash On Delivery">
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                    Cash On Delivery
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
@@ -84,10 +91,11 @@
                                             <th scope="col">Flavor</th>
                                             <th scope="col">Size</th>
                                             <th scope="col" class="col-1">Quantity</th>
+                                            <th scope="col" class="col-1">Subtotal</th>
                                             <th scope="col" class="col-1">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody> 
+                                    <tbody class="data_row"> 
                                         <tr>
                                             <td>
                                                 <select class="form-select" name="rows[0][product_id]" id="flavor">
@@ -99,9 +107,10 @@
 
                                             <td>
                                                 @foreach ($sizes as $size)
+                                                <input class="form-check-input" type="hidden" name="rows[0][size_id]" id="sizes" value="{{ $size->id }}">
                                                     <div class="form-check form-check-inline pt-2">
-                                                        <input class="form-check-input" type="radio" name="rows[0][size_id]" id="sizes" value="{{ $size->id }}">
-                                                        <label class="form-check-label" for="size">
+                                                        <input class="form-check-input price" type="radio" name="rows[0][size]" id="sizes" value="{{ $size->price }}">
+                                                        <label class="form-check-label" id="price" for="size" value="{{ $size->price }}">
                                                             {{ $size->size }} ({{ $size->price }} php)
                                                         </label>
                                                     </div>
@@ -109,7 +118,11 @@
                                             </td>
 
                                             <td>
-                                                <input type="number" class="form-control" name="rows[0][quantity]" id="quantity">
+                                                <input type="number" class="form-control quantity" name="rows[0][quantity]" id="quantity">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control subtotal" type="number" name="subtotal" readonly>
                                             </td>
 
                                             <td>
@@ -124,21 +137,15 @@
                                             <td></td>
                                             <td></td>
                                             <td> Total Amount
-                                                <input type="number" class="form-control" name="total_amount" id="total_amount">
+                                                <input type="number" class="form-control total" name="total_amount" id="total_amount" readonly>
                                             </td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
 
                                     </tfoot>
                                 </table>
                             </div>
-                        </div>
-
-                        <div class="row pt-0">
-                            <div class="col-md-1 offset-md-10">
-                                Total Amount:
-                                {{-- <input type="number" class="form-control" name="total_amount" id="total_amount"> --}}
-                            </div>
-
                         </div>
                         
                         <div class="form-floating pt-3">

@@ -21,6 +21,13 @@
                         Pick-up
                         </label>
                     </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault2" value="Cash On Delivery">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                        Cash On Delivery
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -36,16 +43,17 @@
                     <table class="table table-hover table-sm">
                         <thead>
                             <tr>
-                                <th scope="col" class="col-5">Flavor</th>
+                                <th scope="col" class="col-4">Flavor</th>
                                 <th scope="col" class="col-4">Size</th>
                                 <th scope="col" class="col-1">Quantity</th>
-                                <th scope="col" class="col-2">Action</th>
+                                <th scope="col" class="col-1">Subtotal</th>
+                                <th scope="col" class="col-2"></th>
                             </tr>
                         </thead>
-                        <tbody> 
+                        <tbody class="data_row"> 
                             <tr>
                                 <td>
-                                    <select class="form-select" name="rows[0][product_id]" id="flavor">
+                                    <select class="" name="rows[0][product_id]" id="flavor">
                                         @foreach ($products as $data)
                                             <option value="{{ $data->product_id }}"> {{ $data->product_name }} </option>
                                         @endforeach
@@ -54,9 +62,10 @@
 
                                 <td>
                                     @foreach ($sizes as $size)
+                                        <input class="form-check-input" type="hidden" name="rows[0][size_id]" id="sizes" value="{{ $size->id }}">
                                         <div class="form-check form-check-inline pt-2">
-                                            <input class="form-check-input" type="radio" name="rows[0][size_id]" id="sizes" value="{{ $size->id }}">
-                                            <label class="form-check-label" for="size">
+                                            <input class="form-check-input price" type="radio" name="rows[0][size]" id="sizes" value="{{ $size->price }}">
+                                            <label class="form-check-label" id="price" for="size" value="{{ $size->price }}">
                                                 {{ $size->size }} ({{ $size->price }} php)
                                             </label>
                                         </div>
@@ -64,7 +73,11 @@
                                 </td>
 
                                 <td>
-                                    <input type="number" class="form-control" name="rows[0][quantity]" id="quantity">
+                                    <input type="number" class="form-control quantity" name="rows[0][quantity]" id="quantity">
+                                </td>
+
+                                <td>
+                                    <input class="form-control subtotal" type="number" name="subtotal" readonly>
                                 </td>
 
                                 <td>
@@ -77,10 +90,11 @@
                         <tfoot>
                             <tr>
                                 <td></td>
-                                <td class="float-end mt-3">Total Amount : </td>
-                                <td> 
-                                    <input type="number" class="form-control" name="total_amount" id="total_amount">
+                                <td class="text-end"> Total Amount</td>
+                                <td>
+                                    <input type="number" class="form-control total" name="total_amount" id="total_amount" readonly>
                                 </td>
+                                <td></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -94,7 +108,7 @@
 
             <div class="col mt-3 text-center">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add</button>                  
+                <button type="submit" class="btn btn-primary">Order</button>                  
             </div>
         </div>  
 </form>
@@ -103,9 +117,16 @@
 
 @section('js')
 <script>
-var i = 1;
-  function AddOrder() {
-    $("#order_table table tbody").append('<tr id="rows'+i+'">' +
+    
+    $(document).ready(function() {
+        $("#order_table table tbody").on("keyup", ".price, .quantity", function(){
+            mults(this);
+        })
+    });
+
+    var i = 1;
+    function AddOrder() {
+    $("#order_table table tbody").append('<tr class="data_row" id="rows'+i+'">' +
                                             '<td>' +       
                                                 '<select class="form-select" name="rows['+i+'][product_id]" id="flavor">' +
                                                     '@foreach ($products as $data)' +
@@ -116,9 +137,10 @@ var i = 1;
 
                                             '<td>' +
                                                 '@foreach ($sizes as $size)' +
+                                                '<input class="form-check-input" type="hidden" name="rows['+i+'][size_id]" id="sizes" value="{{ $size->id }}">' +
                                                     '<div class="form-check form-check-inline pt-2">' +
-                                                        '<input class="form-check-input" type="radio" name="rows['+i+'][size_id]" id="sizes" value="{{ $size->id }}">' +
-                                                        '<label class="form-check-label" for="size">' +
+                                                        '<input class="form-check-input price" type="radio" name="rows['+i+'][size]" id="sizes" value="{{ $size->price }}">' +
+                                                        '<label class="form-check-label" id="price" for="size" value="{{ $size->id }}">' +
                                                             '{{ $size->size }} ({{ $size->price }} php)' +
                                                         '</label>' +
                                                     '</div>' +
@@ -126,37 +148,41 @@ var i = 1;
                                             '</td>' +
                                     
                                             '<td>' +
-                                                '<input class="form-control" type="number" name="rows['+i+'][quantity]" id="quantity">' +
+                                                '<input class="form-control quantity" type="number" name="rows['+i+'][quantity]" id="quantity">' +
+                                            '</td>' +
+
+                                            '<td>' +
+                                                '<input class="form-control subtotal" type="number" name="subtotal" readonly>' +
                                             '</td>' +
                                             
                                             '<td class="td-actions">' +
                                                 '<span class="btn btn-danger remove_data" name="remove" id="'+i+'"> x Remove</span>' +
                                             '</td>' +
                                          '</tr>');
-    i++;
-    
-    $(document).on('click', '.remove_data', function() {
-      var btnID = $(this).attr("id");
-      $('#rows'+btnID+'').remove();
-    });
-  }
-
-    $(document).ready(function() {
-            $('table thead th').each(function(i) {
-                calculateColumn(i);
-            });
-    });
-
-    function calculateColumn(index) {
-        var total = 0;
-
-        $('table tr #quantity').each(function() {
-            var value = parseInt($('#quantity', this).eq(index).text());
-            if (!isNaN(value)) {
-                total += value;
-            }
+        i++;
+        
+        $(document).on('click', '.remove_data', function() {
+        var btnID = $(this).attr("id");
+        $('#rows'+btnID+'').remove();
         });
-        $('.total_amount').eq(index).text(total);
+    }
+
+    function mults(elem) {
+        var i = 0
+        var quantity    = $(elem).parent().parent().parent().find(".quantity").val();
+        var price       = $(elem).parent().parent().parent().find('input[name="rows['+i+'][size]"]:checked').val();
+
+        var cost        = quantity * price
+
+        var subtotal       = $(elem).parent().parent().parent().find(".subtotal").val(cost);
+
+        var total_amount = 0;
+        $(elem).parents().parent().parent().find(".data_row").each(function(){
+            total_amount += $(this).find(".subtotal").val() ? parseFloat($(this).find(".subtotal").val()) : 0;
+        });
+
+        var total       = $(elem).parent().parent().parent().parent().find(".total").val(total_amount);
+        console.log(quantity)
     }
 </script>
 @endsection

@@ -23,9 +23,7 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade');
-
+            $table->string('order_number')->references('order_number')->on('orders')->onUpdate('cascade');
             $table->timestamps();
         });
     }

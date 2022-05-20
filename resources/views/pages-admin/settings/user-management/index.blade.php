@@ -47,13 +47,13 @@
                         <tbody id="tableBody">
                             <tr>
                                 <td>USER-000001</td>
-                                <td>Art Sambrano</td>
+                                <td>Mark Valdez</td>
                                 <td>Staff</td>
                                 <td>
                                     <a href="" class="btn btn-warning btn-sm">View</a>
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deactivateUser">Deactivate</button>
                                 </td>
-                                @include('pages-admin.settings.user-management.deactivate');
+                                @include('pages-admin.settings.user-management.deactivate')
                             </tr>
                         </tbody>    
                     </table>

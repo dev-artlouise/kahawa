@@ -69,7 +69,6 @@ class OrdersController extends Controller
             $orders = $request->input('rows');
 
             foreach ($orders as $rows) {
-
                 $data [] = [
                     'order_number'  => $order_number,
                     'customer_name' => $request->customer_name,
@@ -96,7 +95,7 @@ class OrdersController extends Controller
             $payment->payment_status    = 'Not Paid';
             $payment->remarks           = $request->remarks;
             $payment->user_id           = Auth::user()->id;
-            $payment->order_id          = Order::latest('id')->first()->id;
+            $payment->order_number      = Order::latest('id')->first()->order_number;
 
             $payment->save();
 
@@ -135,8 +134,13 @@ class OrdersController extends Controller
                             LEFT JOIN categories ON products.category_id =  categories.id
                             WHERE orders.order_number = ?',[$id]);
 
+        $payment    = DB::select('SELECT * FROM `payments` 
+                            INNER JOIN users    ON payments.user_id         = users.id
+                            INNER JOIN orders   ON payments.order_number    = orders.order_number
+                            WHERE payments.order_number = ?',[$id]);
+
         return view('pages-admin.orders.show')
-            ->with([ 'data' => $data, ]);
+            ->with([ 'data' => $data, 'payment' => $payment, ]);
     }
 
     /**
