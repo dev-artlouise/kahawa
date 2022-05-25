@@ -1,121 +1,165 @@
 @extends('app')
 
 @section('content')
-<form action="{{ route('order.store', 'store') }}" method="POST">
-    @csrf
-        <div class="container-fluid">
-            <div class="pb-3">
-                <div class="col pb-2"> <h6> Order Type </h6> </div>
+<div class="row justify-content-center">
 
-                <div class="col"> 
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault1" value="Delivery" disabled>
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Deliver
-                        </label>
-                    </div>
+    <div class="card">
+        <div class="card-body">
 
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault2" value="Pick-up" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                        Pick-up
-                        </label>
-                    </div>
+            <h4>Place Order</h4>
 
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault2" value="Cash On Delivery">
-                        <label class="form-check-label" for="flexRadioDefault2">
-                        Cash On Delivery
-                        </label>
-                    </div>
-                </div>
-            </div>
+            <hr>
 
-            <div class="form-floating mb-3">
-                <div class="form-floating">
-                    <input type="text" class="form-control" name="customer_name" id="customer_name" placeholder="Customer Name" value="{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}"  readonly>
-                    <label for="customer_name">Customer Name</label>
-                </div>
-            </div>
+            <form action="{{ route('order.store', 'store') }}" method="POST">
+                @csrf
+                    <div class="">
+        
+                        <div class="pb-3">
+                            <div class="col pb-2"> <h6> Order Type </h6> </div>
+        
+                            <div class="col"> 
+        
+                                {{-- <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault1" value="Delivery" disabled>
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Deliver
+                                    </label>
+                                </div> --}}
+        
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="order_type" id="pickUp" value="Pick-up" checked>
+                                    <label class="form-check-label" for="pickUp">
+                                    Pick-up
+                                    </label>
+                                </div>
+        
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="order_type" id="cashOnDelivery" value="Cash On Delivery">
+                                    <label class="form-check-label" for="cashOnDelivery">
+                                    Cash On Delivery
+                                    </label>
+                                </div>
+        
+                            </div>
+                        </div>
+        
+                        <div class="form-floating mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="customer_name" id="customer_name" placeholder="Customer Name" value="{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}"  readonly>
+                                <label for="customer_name">Customer Name</label>
+                            </div>
+                        </div>
+        
+                        <div class="row pt-2 pb-0">
+                            <div class="col-md-12 col-sm-12 col-12 p-2" id="order_table">
+                                <table class="table table-hover table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="col-4">Flavor</th>
+                                            <th scope="col" class="col-4">Size</th>
+                                            <th scope="col" class="col-1">Quantity</th>
+                                            <th scope="col" class="col-1">Subtotal</th>
+                                            <th scope="col" class="col-2"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="data_row"> 
+                                        <tr>
+                                            <td>
+                                                <select class="" name="rows[0][product_id]" id="flavor">
+                                                    @foreach ($products as $data)
+                                                        <option value="{{ $data->product_id }}"> {{ $data->product_name }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+        
+                                            <td>
+                                                @foreach ($sizes as $size)
+                                                    <input class="form-check-input" type="hidden" name="rows[0][size_id]" id="sizes" value="{{ $size->id }}">
+                                                    <div class="form-check form-check-inline pt-2">
+                                                        <input class="form-check-input price" type="radio" name="rows[0][size]" id="sizes" value="{{ $size->price }}">
+                                                        <label class="form-check-label" id="price" for="size" value="{{ $size->price }}">
+                                                            {{ $size->size }} ({{ $size->price }} php)
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </td>
+        
+                                            <td>
+                                                <input type="number" class="form-control quantity" name="rows[0][quantity]" id="quantity">
+                                            </td>
+        
+                                            <td>
+                                                <input class="form-control subtotal" type="number" name="subtotal" readonly>
+                                            </td>
+        
+                                            <td>
+                                                <button class="btn btn-success" type="button" onclick="AddOrder()"> 
+                                                    + Add Order
+                                                </button> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td class="text-end"> Total Amount</td>
+                                            <td>
+                                                <input type="number" class="form-control total" name="total_amount" id="total_amount" readonly>
+                                            </td>
 
-            <div class="row pt-2 pb-0">
-                <div class="col-md-12 col-sm-12 col-12 p-2" id="order_table">
-                    <table class="table table-hover table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="col-4">Flavor</th>
-                                <th scope="col" class="col-4">Size</th>
-                                <th scope="col" class="col-1">Quantity</th>
-                                <th scope="col" class="col-1">Subtotal</th>
-                                <th scope="col" class="col-2"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="data_row"> 
-                            <tr>
-                                <td>
-                                    <select class="" name="rows[0][product_id]" id="flavor">
-                                        @foreach ($products as $data)
-                                            <option value="{{ $data->product_id }}"> {{ $data->product_name }} </option>
-                                        @endforeach
-                                    </select>
-                                </td>
-
-                                <td>
-                                    @foreach ($sizes as $size)
-                                        <input class="form-check-input" type="hidden" name="rows[0][size_id]" id="sizes" value="{{ $size->id }}">
-                                        <div class="form-check form-check-inline pt-2">
-                                            <input class="form-check-input price" type="radio" name="rows[0][size]" id="sizes" value="{{ $size->price }}">
-                                            <label class="form-check-label" id="price" for="size" value="{{ $size->price }}">
-                                                {{ $size->size }} ({{ $size->price }} php)
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                </td>
-
-                                <td>
-                                    <input type="number" class="form-control quantity" name="rows[0][quantity]" id="quantity">
-                                </td>
-
-                                <td>
-                                    <input class="form-control subtotal" type="number" name="subtotal" readonly>
-                                </td>
-
-                                <td>
-                                    <button class="btn btn-success" type="button" onclick="AddOrder()"> 
-                                        + Add Order
-                                      </button> 
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td></td>
-                                <td class="text-end"> Total Amount</td>
-                                <td>
-                                    <input type="number" class="form-control total" name="total_amount" id="total_amount" readonly>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
+                                            <td>
+                                                <div id="collapseDeliveryFee">
+                                                    <input type="text" class="form-control" name="deliveryFee" id="deliveryFee" value="100" disabled> 
+                                                </div>
+                                            </td>
+                                        
+                                        </tr>
+                                    </tfoot>
+                                    
+                                    <script>
+                                        document.querySelector('#collapseDeliveryFee').style.display = 'none';
+                                        
+                                        const pickUp = document.querySelector('#pickUp');
+                                        const cashOnDelivery = document.querySelector('#cashOnDelivery');
+                                        
+                                        pickUp.addEventListener('click', removeDeliveryFee);
+                                        cashOnDelivery.addEventListener('click', displayDeliveryFee);
             
-            <div class="form-floating pt-3">
-                <textarea class="form-control" placeholder="Remarks" id="remarks" name="remarks"></textarea>
-                <label for="remarks">Remarks</label>
-            </div>
+                                        function displayDeliveryFee(){
+                                            collapseDeliveryFee.style.display = 'block'; 
+                                        }
+            
+                                        function removeDeliveryFee(){
+                                            collapseDeliveryFee.style.display = 'none';
+                                        }
+                                    </script>
+                                    
+                                </table>
+                            </div>
+                        </div>
 
-            <div class="col mt-3 text-center">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Order</button>                  
-            </div>
-        </div>  
-</form>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Remarks" id="remarks" name="remarks"></textarea>
+                            <label for="remarks">Remarks</label>
+                        </div>
+        
+                        <div class="col mt-3 text-center">
+                            {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
+                            <button type="submit" class="btn btn-primary">Order</button>                  
+                        </div>
+                    </div>  
+            </form>
+        </div>
+    </div>
+
+</div>
+   
+    
 @endsection
 
 
 @section('js')
+
 <script>
     
     $(document).ready(function() {
@@ -185,4 +229,5 @@
         console.log(quantity)
     }
 </script>
+
 @endsection

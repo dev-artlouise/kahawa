@@ -42,36 +42,27 @@
     
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-sm table-hover text-center" id="myTable">
-                        <caption>List of Products</caption>
-                        <thead class="">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Order Date</th>
-                                <th scope="col">Customer Name</th>
-                                <th scope="col">Order Type</th>
-                                <th scope="col">Payment Type</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                
-                        <tbody>
-                            @foreach ($data as $key => $data)
-                            <tr>
-                                <td> {{ ++$key }}</td>
-                                <td> {{ $data->order_number }}</td>
-                                <td> {{ $data->created_at }}</td>
-                                <td> {{ $data->customer_name}}</td>
-                                <td> {{ $data->order_type }}</td>
-                                <td>  Cash </td>
-                                <td>
-                                    <a href="{{ route('admin.order.edit', $data->order_number) }}" class="btn btn-warning btn-sm">View</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>    
-                    </table>
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="true">Orders</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button" role="tab" aria-controls="cancelled" aria-selected="false">Cancelled</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent">
+                        @include('pages-admin.orders.tabs.orders')
+                        @include('pages-admin.orders.tabs.completed')
+                        @include('pages-admin.orders.tabs.cancelled')
+                    </div>
+
+                    {{--  --}}
+
                 </div>   
             </div>
         </div>
