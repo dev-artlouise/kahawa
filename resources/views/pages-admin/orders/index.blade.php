@@ -55,7 +55,7 @@
                         </li>
                     </ul>
 
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content pt-3" id="myTabContent">
                         @include('pages-admin.orders.tabs.orders')
                         @include('pages-admin.orders.tabs.completed')
                         @include('pages-admin.orders.tabs.cancelled')
@@ -74,7 +74,7 @@
     
 
     $(document).ready(function() {
-        $("#order_table table tbody").on("keyup", ".price, .quantity", function(){
+        $("#order_table table tbody").on("change, keyup, click", ".price, .quantity, .cod", function(){
             mults(this);
         })
     }); 
@@ -126,8 +126,9 @@
     var i = 0
     var quantity    = $(elem).parent().parent().parent().find(".quantity").val();
     var price       = $(elem).parent().parent().parent().find('input[name="rows['+i+'][size]"]:checked').val();
-
+    
     var cost        = quantity * price
+
 
     var subtotal       = $(elem).parent().parent().parent().find(".subtotal").val(cost);
 

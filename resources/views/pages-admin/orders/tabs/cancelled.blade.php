@@ -1,5 +1,5 @@
 <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
-    <table class="table table-sm table-hover text-center" id="myTable">
+    <table class="table table-sm table-hover text-center" id="myTable2">
         <caption>List of Cancelled Orders</caption>
         <thead class="">
             <tr>
@@ -15,7 +15,7 @@
 
         <tbody>
             @foreach ($data as $key => $data)
-                @if ($data->status === ('Cancelled'))
+                @if ($data->status === 'Cancelled')
                     <tr>
                         <td> {{ ++$key }}</td>
                         <td> {{ $data->order_number }}</td>
@@ -24,11 +24,7 @@
                         <td> {{ $data->customer_name}}</td>
                         <td> {{ $data->order_type }}</td>
                         <td>  Cash </td>
-                    </tr>
-                @else
-                    <div class="card card-body">
-                        <h4>Currently no data</h4>    
-                    </div>    
+                    </tr>    
                 @endif
             @endforeach
         </tbody>    

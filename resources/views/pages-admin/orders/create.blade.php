@@ -25,15 +25,15 @@
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault2" value="Pick-up" checked>
-                                    <label class="form-check-label" for="flexRadioDefault2">
+                                    <input class="form-check-input" type="radio" name="order_type" id="Pick" value="Pick-up" checked>
+                                    <label class="form-check-label" for="Pick">
                                     Pick-up
                                     </label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault2" value="Cash On Delivery">
-                                    <label class="form-check-label" for="flexRadioDefault2">
+                                    <input class="form-check-input cod" type="radio" name="order_type" id="cod" value="Cash On Delivery">
+                                    <label class="form-check-label" for="cod">
                                     Cash On Delivery
                                     </label>
                                 </div>

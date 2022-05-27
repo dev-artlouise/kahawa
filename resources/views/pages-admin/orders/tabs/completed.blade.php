@@ -1,5 +1,5 @@
 <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
-    <table class="table table-sm table-hover text-center" id="myTable">
+    <table class="table table-sm table-hover text-center" id="myTable2">
         <caption>List of Completed Orders</caption>
         <thead class="">
             <tr>
@@ -16,8 +16,7 @@
 
         <tbody>
             @foreach ($data as $key => $data)
-
-                @if ($data->status === ('Completed'))
+                @if ($data->status == 'Completed')
                     <tr>
                         <td> {{ ++$key }}</td>
                         <td> {{ $data->order_number }}</td>
@@ -27,12 +26,17 @@
                         <td> {{ $data->order_type }}</td>
                         <td>  Cash </td>
                     </tr>
-                @else
-                    <div class="card card-body">
-                        <h4>Currently no data</h4>    
-                    </div>    
+                @elseif ($data->status == 'Order Received')
+                    <tr>
+                        <td> {{ ++$key }}</td>
+                        <td> {{ $data->order_number }}</td>
+                        <td> {{ $data->created_at }}</td>
+                        <td> <span class="badge bg-success">{{$data->status}}</span></td>
+                        <td> {{ $data->customer_name}}</td>
+                        <td> {{ $data->order_type }}</td>
+                        <td>  Cash </td>
+                    </tr>
                 @endif
-            
             @endforeach
         </tbody>    
     </table>

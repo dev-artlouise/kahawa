@@ -98,8 +98,8 @@ class OrderController extends Controller
             $payment->order_number      = Order::latest('id')->first()->order_number;
 
             $payment->save();
-
-            return back();
+            return redirect()->route('order.show', Auth::user()->id);
+            // return back();
 
         } catch (\Throwable $th) {
             

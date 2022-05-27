@@ -141,8 +141,10 @@
                                 <span class="badge bg-success">{{ $data[0]->status }}</span>
                             @elseif (strlen($data[0]->status == 'Rejected'))
                                 <span class="badge bg-danger">{{ $data[0]->status }}</span>
-                                @elseif (strlen($data[0]->status == 'Cancel'))
+                            @elseif (strlen($data[0]->status == 'Cancelled'))
                                 <span class="badge bg-danger">{{ $data[0]->status }}</span>
+                            @elseif (strlen($data[0]->status == 'Order Received'))
+                                <span class="badge bg-success">{{ $data[0]->status }}</span>
                             @endif
                         </div>
 
@@ -151,7 +153,7 @@
                         </div>
 
                         <div class="col-6 mb-3">
-                            {{ $payment[0]->total_amount }}  Php
+                            ₱{{ $payment[0]->total_amount }}
                         </div>
 
                         <hr>
@@ -162,7 +164,14 @@
                                     @csrf
                                     @method('PUT')
 
-                                    <button type="submit" name="status" class="btn btn-danger" value="Cancel">Cancel Order</button>
+                                    <button type="submit" name="status" class="btn btn-danger" value="Cancelled">Cancel Order</button>
+                                </form>
+                            @elseif (strlen($data[0]->status == 'Ready to pick-up'))
+                                <form action="{{ route('order.update', $data[0]->order_number) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <button type="submit" name="status" class="btn btn-success" value="Order Received">Order Received</button>
                                 </form>
                             @endif
                         </div>

@@ -44,7 +44,7 @@
 
         <script>
             $(document).ready( function () {
-                $('#myTable').DataTable();
+                $('#myTable, #myTable2').DataTable();
             } );
         </script>
         

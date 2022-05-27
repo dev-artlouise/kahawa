@@ -22,14 +22,19 @@
                 <td> {{ $data->created_at }}</td>
 
                 @if ($data->status === 'Completed')
-                    <td> <span class="badge bg-success"></span> Completed</td>
-                @elseif($data->status === 'Cancelled')
-                    <td> <span class="badge bg-danger"></span> Cancelled</td>
-                @else
-                    <td><span class="badge bg-success"></span>Pending</td>
+                    <td> <span class="badge bg-success">Completed</span></td>
+                @elseif ($data->status === 'Cancelled')
+                    <td> <span class="badge bg-danger">Cancelled</span></td>
+                @elseif ($data->status === 'Rejected')
+                    <td> <span class="badge bg-danger">Rejected</span> </td>
+                @elseif ($data->status === 'Pending')
+                    <td><span class="badge bg-warning">Pending</span></td>
+                @elseif ($data->status === 'In Process')
+                    <td><span class="badge bg-primary">In Process</span></td>
+                @elseif ($data->status === 'Order Received')
+                    <td><span class="badge bg-success">Order Received </span></td>
                 @endif
 
- 
                 <td> {{ $data->customer_name}}</td>
                 <td> {{ $data->order_type }}</td>
                 <td>  Cash </td>
