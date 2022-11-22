@@ -123,23 +123,23 @@
   }
 
     function mults(elem) {
-    var i = 0
-    var quantity    = $(elem).parent().parent().parent().find(".quantity").val();
-    var price       = $(elem).parent().parent().parent().find('input[name="rows['+i+'][size]"]:checked').val();
-    
-    var cost        = quantity * price
+        var i = 0
+        var quantity    = $(elem).parent().parent().parent().find(".quantity").val();
+        var price       = $(elem).parent().parent().parent().find('input[name="rows['+i+'][size]"]:checked').val();
+        
+        var cost        = quantity * price
 
 
-    var subtotal       = $(elem).parent().parent().parent().find(".subtotal").val(cost);
+        var subtotal       = $(elem).parent().parent().parent().find(".subtotal").val(cost);
 
-    var total_amount = 0;
-    $(elem).parents().parent().parent().find(".data_row").each(function(){
-        total_amount += $(this).find(".subtotal").val() ? parseFloat($(this).find(".subtotal").val()) : 0;
-    });
+        var total_amount = 0;
+        $(elem).parents().parent().parent().find(".data_row").each(function(){
+            total_amount += $(this).find(".subtotal").val() ? parseFloat($(this).find(".subtotal").val()) : 0;
+        });
 
-    var total       = $(elem).parent().parent().parent().parent().find(".total").val(total_amount);
-    console.log(total_amount)
-  }
+        var total       = $(elem).parent().parent().parent().parent().find(".total").val(total_amount);
+        console.log(total_amount)
+    }
 
 </script>
 @endsection

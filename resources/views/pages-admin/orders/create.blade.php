@@ -118,7 +118,7 @@
                                             </td>
 
                                             <td>
-                                                <input type="number" class="form-control quantity" name="rows[0][quantity]" id="quantity">
+                                                <input type="number" class="form-control quantity" name="rows[0][quantity]" id="quantity" min="0" max="20">
                                             </td>
 
                                             <td>

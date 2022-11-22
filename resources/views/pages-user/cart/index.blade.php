@@ -29,7 +29,7 @@
 
 
                     <td data-th="Quantity">
-                        <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
+                        <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" min="0" />
                     </td>
 
                     <td data-th="Price">${{ $details['price'] }}</td>
