@@ -28,13 +28,11 @@ class OrdersController extends Controller
                                 category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
                                 INNER JOIN categories AS category ON products.category_id =  category.id');
 
-        $data       = DB::select('SELECT * FROM `users` 
-                                INNER JOIN orders ON orders.user_id = users.id
-                                GROUP BY orders.customer_name');
+        $data       = DB::select('SELECT * FROM `orders` INNER JOIN users ON orders.user_id = users.id');
                                 
         $sizes      = Size::all();
 
-        return view('pages-admin.orders.index')
+        return view('pages-admin.order-history.index')
                 ->with([
                     'products'  => $products,
                     'sizes'     => $sizes,
@@ -49,7 +47,20 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        //
+        $products   = DB::select('SELECT products.id AS product_id, product_name, product_description, product_image, products.category_id,
+                                category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
+                                INNER JOIN categories AS category ON products.category_id =  category.id');
+
+        $data       = DB::select('SELECT * FROM `orders` INNER JOIN users ON orders.user_id = users.id');
+                                
+        $sizes      = Size::all();
+
+        return view('pages-admin.orders.index')
+                ->with([
+                    'products'  => $products,
+                    'sizes'     => $sizes,
+                    'data'     => $data,
+                ]);
     }
 
     /**

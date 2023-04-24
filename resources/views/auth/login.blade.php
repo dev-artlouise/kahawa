@@ -9,7 +9,7 @@
                 <div class="card-body ">
 
                     <div class="container">
-                        <h4 class="text-secondary text-center"> <strong>LOGIN</strong> </h4>
+                        <h4 class="text-secondary text-center"> <strong> PLEASE LOGIN</strong> </h4>
 
                         <hr>
     
@@ -18,7 +18,7 @@
     
                             <div class="form-floating mt-4 mb-3">
                                 <input type="email" class="form-control  @error('email') is-invalid @enderror" name="email" placeholder=" " value="{{old('email')}}">
-                                <label for="name">Email</label>
+                                <label for="name">Email Address</label>
     
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">

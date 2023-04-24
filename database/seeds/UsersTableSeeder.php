@@ -20,14 +20,14 @@ class UsersTableSeeder extends Seeder
         DB::table('role_user')->truncate();
 
         $role = Role::where('name','Admin')->first();
-
+ 
         $admin = User::create([
             'firstName' => 'Admin',
             'lastName' => 'Admin',
             'email' => 'admin@kahawa.ph',
             'password' => Hash::make('secret'),
         ]);
-
+ 
         $admin->role()->attach($role);
 
     }

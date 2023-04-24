@@ -118,9 +118,15 @@ class CategoryController extends Controller
     {
         try {
             DB::table('categories')->delete($id);
+
+            session()->flash('success', 'Data Deleted');
             return back();
+
         } catch (\Throwable $th) {
-            throw $th;
+            
+            session()->flash('danger', 'Failed to Delete Data');
+            return back();
         }
+        
     }
 }

@@ -21,7 +21,7 @@
                 <td> {{ $data->order_number }}</td>
                 <td> {{ $data->created_at }}</td>
 
-                @if ($data->status === 'Completed')
+                @if ($data->status === 'Completed' || $data->status === 'Complete')
                     <td> <span class="badge bg-success">Completed</span></td>
                 @elseif ($data->status === 'Cancelled')
                     <td> <span class="badge bg-danger">Cancelled</span></td>
@@ -32,7 +32,9 @@
                 @elseif ($data->status === 'In Process')
                     <td><span class="badge bg-primary">In Process</span></td>
                 @elseif ($data->status === 'Order Received')
-                    <td><span class="badge bg-success">Order Received </span></td>
+                    <td><span class="badge bg-success">Order Received </span>
+                @elseif ($data->status === 'Ready to pick-up')
+                    <td><span class="badge bg-primary">Ready to pick-up</span></td></td>
                 @endif
 
                 <td> {{ $data->customer_name}}</td>

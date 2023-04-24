@@ -27,9 +27,7 @@ class OrderController extends Controller
                     category.id AS category_id, category.name AS category_name,  category.description AS category_description FROM products 
                     INNER JOIN categories AS category ON products.category_id =  category.id');
 
-        $data       = DB::select('SELECT * FROM `users` 
-                    INNER JOIN orders ON orders.user_id = users.id
-                    GROUP BY orders.customer_name');
+        $data       = DB::select('SELECT * FROM `orders` INNER JOIN users ON orders.user_id = users.id');
                 
         $sizes      = Size::all();
 

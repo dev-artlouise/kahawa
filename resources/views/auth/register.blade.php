@@ -81,7 +81,7 @@
 
                             <div class="form-floating mt-4 mb-3">
                                 <input type="email" class="form-control  @error('email') is-invalid @enderror" name="email" placeholder=" " value="{{old('email')}}">
-                                <label for="name">Email</label>
+                                <label for="name">Email Address</label>
     
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">

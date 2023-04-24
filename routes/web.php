@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::namespace('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('order', 'OrdersController');
+        Route::resource('order-history', 'OrdersController');
     });
 
     Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {

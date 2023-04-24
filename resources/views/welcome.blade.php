@@ -9,10 +9,10 @@
                 <div class="hero__categories">
                     <div class="hero__categories__all bg-secondary">
                         <i class="fa fa-bars"></i>
-                        <span>LANJAL KAMO!</span>
+                        <span>LANJAL KAMO</span>
                     </div>
                     <ul>
-                        <li> <span>  "ASSALALMWALAIKUM" </span></li>
+                        <li> <span>  "ASSALAMUALAYKUM" </span></li>
                         {{-- <li><a href="#">Beverages</a></li>
                         <li><a href="#">Sweets</a></li> --}}
                     </ul>
@@ -23,7 +23,7 @@
                     <div class="hero__search__form">
                         <form action="#">
                             <div class="hero__search__categories">
-                                All Categories
+                                All Products
                             </div>
                             <input type="text" placeholder="What do yo u need?">
                             <button type="submit" class="btn btn-outline-secondary">SEARCH</button>
@@ -43,8 +43,8 @@
                     <div class="hero__text ">
                         <span class="text-white">KAHAWA</span>
                         <h2 class="text-white">COFFEE PANALO</h2>
-                        <p class="text-white">Free Pickup and Delivery Available</p>
-                        <a href="{{ route('order.create')}}" class="primary-btn bg-secondary">ORDER NOW</a>
+                        <p class="text-white">Free pickup and delivery available</p>
+                        <a href="{{ route('order.create')}}" class="primary-btn bg-secondary">Order Now</a>
                     </div>
                 </div>
             </div>

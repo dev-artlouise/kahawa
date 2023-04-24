@@ -25,8 +25,15 @@
                 </li>
 
                 <li>
-                    <a href="{{route('admin.order.index')}}" class="nav-link active">
+                    <a href="{{route('admin.order.create')}}" class="nav-link active">
                        Orders
+                    </a>
+                </li>
+
+                
+                <li>
+                    <a href="{{route('admin.order-history.index')}}" class="nav-link active">
+                       Order History
                     </a>
                 </li>
 
