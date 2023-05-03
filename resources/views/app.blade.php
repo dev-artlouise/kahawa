@@ -31,9 +31,13 @@
 
     <div id="app">
 
-        <nav class="mb-5 navbar navbar-expand-md navbar-light bg-white position-fized top-0 start-0 w-100 shadow-sm">
+        <nav class="mb-5 navbar navbar-expand-md navbar-light bg-white sticky-top shadow-sm " >
             
             <div class="container">
+
+                <a class="navbar-brand" href="{{url('/')}}">
+                    <img src="{{asset('img/hakab-removebg-preview.png')}}" alt="" width="60" height="60">
+                </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                     <span class="navbar-toggler-icon"></span>
@@ -41,7 +45,7 @@
     
                 <div class="collapse navbar-collapse" id="navbarContent">
     
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav ms-auto">
                         @guest
                             <li class="nav-item"> 
                                 <a class="nav-link" href="{{ url('/') }}">Home</a>
@@ -52,7 +56,7 @@
                             </li>
                         
                             <li class="nav-item"> 
-                                <a class="nav-link" href="{{ route('products.index') }}">Products</a>
+                                <a class="nav-link" href="#product">Products</a>
                             </li>
 
                             <li class="nav-item">
@@ -62,7 +66,7 @@
                     </ul>
     
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">

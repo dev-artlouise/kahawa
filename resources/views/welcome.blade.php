@@ -4,21 +4,8 @@
  <!-- Hero Section Begin -->
 <section class="hero">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="hero__categories">
-                    <div class="hero__categories__all bg-secondary">
-                        <i class="fa fa-bars"></i>
-                        <span>LANJAL KAMO</span>
-                    </div>
-                    <ul>
-                        <li> <span>  "ASSALAMUALAYKUM" </span></li>
-                        {{-- <li><a href="#">Beverages</a></li>
-                        <li><a href="#">Sweets</a></li> --}}
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-9">
+        {{-- <div class="row"> --}}
+            {{-- <div class="col-lg-12"> --}}
                 <div class="hero__search">
                     <div class="hero__search__form">
                         <form action="#">
@@ -41,14 +28,14 @@
                 </div>
                 <div class="hero__item set-bg" data-setbg="img/hero/banner4.jpg">
                     <div class="hero__text ">
-                        <span class="text-white">KAHAWA</span>
+                        <span class="text-white mb">KAHAWA</span>
                         <h2 class="text-white">COFFEE PANALO</h2>
                         <p class="text-white">Free pickup and delivery available</p>
-                        <a href="{{ route('order.create')}}" class="primary-btn bg-secondary">Order Now</a>
+                        <a href="{{ route('order.create')}}" class="btn btn-sm btn-secondary">Order Now</a>
                     </div>
                 </div>
-            </div>
-        </div>
+            {{-- </div> --}}
+        {{-- </div> --}}
     </div>
 </section>
 
@@ -69,7 +56,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" id="product">
         @foreach($products as $product)
             <div class="col-xs-18 col-sm-6 col-md-3">
                 <div class="card">

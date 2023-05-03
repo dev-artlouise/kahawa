@@ -24,13 +24,13 @@ Route::get('/', function () {
 
     return view('welcome')->with([
         'products'  => $products,
-    ]);
+    ]); 
 });
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 	Route::get('/home', 'HomeController@index')->name('home');
