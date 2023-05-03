@@ -62,17 +62,7 @@ class ProductController extends Controller
                 ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
+  
     /**
      * Display the specified resource.
      *
@@ -85,40 +75,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-        /**
      * Write code on Method
      *
      * @return response()
@@ -149,5 +105,24 @@ class ProductController extends Controller
           
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
+    }
+
+    public function search(Request $request)
+    {
+        try {
+            if ($request->search) {
+
+                $product =  Product::where('product_name','LIKE','%'.$request->search.'%')->latest()->paginate(5);
+                return view('pages-user.products.search')->with([ 'product' => $product ]);
+                
+            } else {
+               
+                return back();
+            }
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+       
     }
 }

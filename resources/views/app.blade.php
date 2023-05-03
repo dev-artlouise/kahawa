@@ -50,6 +50,11 @@
                             <li class="nav-item"> 
                                 <a class="nav-link" href="{{ url('/') }}">Home</a>
                             </li>
+
+                            
+                            <li class="nav-item"> 
+                                <a class="nav-link" href="#product">Products</a>
+                            </li>
                         @else
                             <li class="nav-item"> 
                                 <a class="nav-link" href="{{ url('/') }}">Home</a>
@@ -79,70 +84,7 @@
                                 </li>
                             @endif
                         @else
-    
-                            {{-- <ul class="navbar-nav ms-auto"> --}}
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('notifications.index')}}">
-                                        <i class="fa-solid fa-bell"></i>
-                                        <span class="badge bg-danger">3</span>
-                                    </a>
-                                </li> --}}
-
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('cart.index')}}">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                        <span class="badge bg-danger">3</span>
-                                    </a>
-                                </li> --}}
-                            {{-- </ul> --}}
-                            
-                            {{-- <li class="nav-item dropdown">
-                                <a id="cartDropDown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
-                                    <span class="badge badge-pill bg-danger">{{ count((array) session('cart')) }}</span>
-                                </a>
-
-                                <div class="dropdown-menu" style="width:350px;" aria-labelledby="cartDropDown">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-sm-6 col-6">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> 
-                                            <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
-                                        </div>
-
-                                        @php $total = 0 @endphp
-                                            @foreach((array) session('cart') as $id => $details)
-                                                @php $total += $details['price'] * $details['quantity'] @endphp
-                                            @endforeach
-                                            
-                                        <div class="col-lg-6 col-sm-6 col-6 text-right">
-                                            <p>Total: <span class="text-info">{{ $total }}</span></p>
-                                        </div>
-                                    </div>
-
-                                    @if(session('cart'))
-                                        @foreach(session('cart') as $id => $details)
-                                            <div class="row">
-                                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                                    <span class=""> Quantity: {{ $details['quantity'] }}</span>
-                                                </div>
-
-                                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                                    <p>{{ $details['name'] }}</p>
-                                                    <span class="price text-info"> ${{ $details['price'] }}</span>
-                                                    <span class=""> Quantity: {{ $details['quantity'] }}</span>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                    
-                                    <div class="row">
-                                        <div class="col-lg-12 col-sm-12 col-12 text-center">
-                                            <a href="{{ url('cart') }}" class="btn btn-primary btn-block">View all</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li> --}}
-
+                        
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->firstName }}

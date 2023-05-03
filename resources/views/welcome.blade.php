@@ -8,12 +8,11 @@
             {{-- <div class="col-lg-12"> --}}
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
+                        <form action="{{ url('search')}}" method="GET" role="search">
                             <div class="hero__search__categories">
-                                All Products
+                                Search Products
                             </div>
-                            <input type="text" placeholder="What do yo u need?">
-                            <button type="submit" class="btn btn-outline-secondary">SEARCH</button>
+                            <input class="text-black" type="search" name="search" value="" placeholder="What do yo u need?">    
                         </form>
                     </div>
                     <div class="hero__search__phone">
